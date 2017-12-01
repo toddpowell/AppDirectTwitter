@@ -2,4 +2,8 @@
 <p>Tweets {{title}}</p>
 
 <p>Tweets</p>
-{{tweets}}
+{{!-- {{tweets}} --}}
+
+{{#each tweets}}
+    <li>{{this}}</li>
+{{/each}}

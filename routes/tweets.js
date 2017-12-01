@@ -51,7 +51,7 @@ router.get('/', function(req, res, next) {
 
   res.render('tweets', {
     title: "xAppDirect Twitter",
-    tweets: tweetArray[0]
+    tweets: tweetArray
   });
 });
 

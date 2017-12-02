@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var request = require('request');
+var cheerio = require('cheerio');
 
 ///////////////////
 // Twitter stuff //
@@ -15,7 +17,7 @@ var client = new Twitter({
   
 var params = {
     screen_name: 'appdirect', 
-    count: 30, 
+    count: 3, 
     tweet_mode: "extended"      // Use this to avoid truncation
 };
 
@@ -25,27 +27,55 @@ function gotData(error, data, response) {
     tweetArray = [];
       //console.log(data);
     console.log("# of tweets: " + data.length);
-      
+
     for (tweet of data) {
         console.log('----------------------');
-        console.log("- id_str = " + tweet.id_str);
-        console.log("- created = " + tweet.created_at);
-        console.log("- full_text = " + tweet.full_text);  // Need to parse for links
-        //console.log("- entities.hashtags: " + tweet.entities.hashtags);
-        // console.log("- location = " + tweet.user.location);
-        console.log("- user.description = " + tweet.user.description);
+
+        // Retweets
         console.log("- retweeted_status = " + tweet.retweeted_status);
         if (tweet.retweeted_status) {
-            console.log("RETWEETED id_str =  " + tweet.retweeted_status.id_str);
-            console.log("RETWEETED full_text =  " + tweet.retweeted_status.full_text);
+          // true
+          //console.log("RETWEETED id_str =  " + tweet.retweeted_status.id_str);
+          //console.log("RETWEETED full_text =  " + tweet.retweeted_status.full_text);
+        } else {
+          //false
         }
-        tweetArray.push(tweet.full_text);
+
+        console.log("- id_str = " + tweet.id_str);
+        console.log("- name = " + tweet.user.name);
+        //console.log("- user.description = " + tweet.user.description);        
+        console.log("- created = " + tweet.created_at);
+        console.log("- full_text = " + tweet.full_text);  // Need to parse for links
+        
+        // Summary card
+        var summaryData;
+        if (tweet.entities.urls[0]) {
+          console.log("- summary card url = " + tweet.entities.urls[0].url);
+          // @@@ Insert screen sraping here
+          addSummaryData(tweet.entities.urls[0].url, tweet.full_text);
+        } else {      
+          tweetArray.push(tweet.full_text);
+        }
     }
   } 
 }
 
-
-
+function addSummaryData(url, fullText){
+  request(url, function (err, resp, body) {
+    if (err) {
+      return console.log("Error!: " + err + " using " + url);
+    }
+    var $ = cheerio.load(body);
+    tweetArray.push(fullText);
+    // do stuff with the `$` content here
+    $title = $('meta[name="twitter:title"]').attr('content');
+    console.log("!!! Got Summary !!!");
+    console.log(">>> title : " + $title);
+    tweetArray.push("::: Summary Title: " + $title);
+    console.log("--- pushed");
+  });
+}
+ 
 //////////////////
 // Router stuff //
 //////////////////

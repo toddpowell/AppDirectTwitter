@@ -11,7 +11,18 @@
     <div class="col-sm-4 timeline-column">
         <div class="account-title">Tweets by @AppDirect</div>
         {{#each tweets}}
-            <li>{{this}}</li>
+            <hr>
+            <div>
+                <p>ID: {{this.id}}</p>
+                <p>user-name: {{this.userName}}</p>            
+                <p>created-at: {{this.created-at}}</p>
+                <p>full-text : {{this.fullText}}</p>
+                <p>summary-url: {{this.summaryUrl}}</p>
+                <p>summary-card: {{this.summaryCard}}</p>
+                <p>summary-site: {{this.summarySite}}</p>
+                <p>summary-title: {{this.summaryTitle}}</p>
+                <p>summary-description: {{this.summaryDescription}}</p>
+            </div>
         {{/each}}
     </div>
     <div class="col-sm-4 timeline-column">

@@ -14,3 +14,17 @@ I wanted to build custom Twitter cards, in order to reduce REST calls. Each use 
     <meta name="twitter:description" content="Digital transformation strategies are making the most progress in telecom, banking, utilities and education, according to market researcher Ovum." />
 I could write some code to crawl the target sites for the summary data, but that's reinventing the wheel, and it doesn't reduce network traffic any. Too much risk and effort for little to no reward. It's better use twttr.widget.create. This will also eliminate the need for writing custom CSS.
 !!! Correction - Can use cheerio to scrape meta data
+
+
+My Tweet Object:
+var tweet = {
+    id:
+    user-name:
+    created-at:
+    full-text:
+    summary-url:            // same as summary-site?
+    summary-card:           // what's this for?
+    summary-site:
+    summary-title:
+    summary-description:    // same as full-text?
+}

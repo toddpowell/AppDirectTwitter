@@ -47,31 +47,55 @@ function gotData(error, data, response) {
         console.log("- created = " + tweet.created_at);
         console.log("- full_text = " + tweet.full_text);  // Need to parse for links
         
+        var summaryUrl = tweet.entities.urls[0].url || null;
+
+        var tweetObj = {
+          id:                 tweet.id_str,
+          userName:           tweet.user.name,
+          createdAt:          tweet.created_at,   
+          fullText:           tweet.full_text,
+          summaryUrl:         summaryUrl,   // same as summary-site?
+          summaryCard:        null,         // what's this for?
+          summarySite:        null,
+          summaryTitle:       null,
+          summaryDescription: null          // same as full-text?
+        }
+
         // Summary card
         var summaryData;
-        if (tweet.entities.urls[0]) {
+        if (summaryUrl) {
           console.log("- summary card url = " + tweet.entities.urls[0].url);
-          // @@@ Insert screen sraping here
-          addSummaryData(tweet.entities.urls[0].url, tweet.full_text);
+          // Scrape site for Twitter meta data - This is what Twitter does to build their summary cards
+          addSummaryData(tweet.entities.urls[0].url, tweetObj);
         } else {      
-          tweetArray.push(tweet.full_text);
+          tweetArray.push(tweetObj);
         }
     }
   } 
 }
 
-function addSummaryData(url, fullText){
+function addSummaryData(url, twitterObj){
   request(url, function (err, resp, body) {
     if (err) {
       return console.log("Error!: " + err + " using " + url);
     }
     var $ = cheerio.load(body);
-    tweetArray.push(fullText);
+
     // do stuff with the `$` content here
-    $title = $('meta[name="twitter:title"]').attr('content');
+    $card = $('meta[name="twitter:card"]').attr('content'),
+    $site = $('meta[name="twitter:site"]').attr('content'),
+    $title = $('meta[name="twitter:title"]').attr('content'),
+    $description = $('meta[name="twitter:description"]').attr('content'),
     console.log("!!! Got Summary !!!");
     console.log(">>> title : " + $title);
-    tweetArray.push("::: Summary Title: " + $title);
+
+    // Add summary card data to tweet objecte
+    twitterObj.summaryCard = $card;
+    twitterObj.summarySite = $site;
+    twitterObj.summaryTitle = $title;
+    twitterObj.summaryDescription = $description;
+
+    tweetArray.push(twitterObj);    
     console.log("--- pushed");
   });
 }

@@ -15,27 +15,30 @@ var client = new Twitter({
   
 var params = {
     screen_name: 'appdirect', 
-    count: 10, 
+    count: 30, 
     tweet_mode: "extended"      // Use this to avoid truncation
 };
 
 var tweetArray = [];
 function gotData(error, data, response) {
   if (!error) {
+    tweetArray = [];
       //console.log(data);
     console.log("# of tweets: " + data.length);
       
     for (tweet of data) {
-        // console.log('----------------------');
-        // console.log("TWEET: id_str = " + tweet.id_str);
-        // console.log("TWEET: full_text = " + tweet.full_text);
-        // console.log("TWEET: " + tweet.user.location);
-        // console.log("TWEET: " + tweet.user.description);
-        // console.log("TWEET: retweeted_status = " + tweet.retweeted_status);
-        // if (tweet.retweeted_status) {
-        //     console.log("RETWEETED: " + tweet.retweeted_status.id_str);
-        //     console.log("RETWEETED: " + tweet.retweeted_status.full_text);
-        // }
+        console.log('----------------------');
+        console.log("- id_str = " + tweet.id_str);
+        console.log("- created = " + tweet.created_at);
+        console.log("- full_text = " + tweet.full_text);  // Need to parse for links
+        //console.log("- entities.hashtags: " + tweet.entities.hashtags);
+        // console.log("- location = " + tweet.user.location);
+        console.log("- user.description = " + tweet.user.description);
+        console.log("- retweeted_status = " + tweet.retweeted_status);
+        if (tweet.retweeted_status) {
+            console.log("RETWEETED id_str =  " + tweet.retweeted_status.id_str);
+            console.log("RETWEETED full_text =  " + tweet.retweeted_status.full_text);
+        }
         tweetArray.push(tweet.full_text);
     }
   } 
@@ -50,7 +53,7 @@ router.get('/', function(req, res, next) {
   client.get('statuses/user_timeline', params, gotData );
 
   res.render('tweets', {
-    title: "xAppDirect Twitter",
+    title: "AppDirect Twitter",
     tweets: tweetArray
   });
 });

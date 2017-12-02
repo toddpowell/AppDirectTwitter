@@ -1,9 +1,30 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 <h1>Tweets {{title}}</h1>
 <p>Tweets {{title}}</p>
 
 <p>Tweets</p>
 {{!-- {{tweets}} --}}
 
-{{#each tweets}}
-    <li>{{this}}</li>
-{{/each}}
+<div class="container"> 
+  <div class="row">
+    <div class="col-sm-4 timeline-column">
+        <div class="account-title">Tweets by @AppDirect</div>
+        {{#each tweets}}
+            <li>{{this}}</li>
+        {{/each}}
+    </div>
+    <div class="col-sm-4 timeline-column">
+        <div class="account-title">Tweets by @LaughingSquid</div>
+        {{#each tweets}}
+            <li>{{this}}</li>
+        {{/each}}
+    </div>
+    <div class="col-sm-4 timeline-column">
+        <div class="account-title">Tweets by @TechCrunch</div>
+        {{#each tweets}}
+            <li>{{this}}</li>
+        {{/each}}
+    </div>    
+  </div>
+</div> 

@@ -1,0 +1,14 @@
+Tweet Object:
+https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/tweet-object.html
+
+https://dev.twitter.com/web/embedded-tweets/css
+
+https://stackoverflow.com/questions/24663924/how-to-style-twitter-widget-using-my-own-css
+
+!!!
+I wanted to build custom Twitter cards, in order to reduce REST calls. Each use of twttr.widget.create will produce a REST call. Unfortunately, I learned that I cannot create the summary cards from the returned JSON data, because the summary fields are not in the data. Instead, they are created by Twitter. (https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/summary) Twitter scrapes target sites for Twitter meta data, such as twitter:card, twitter: title, twitter:description.
+    ex. https://twitter.com/AppDirect/status/936629480302428160
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@searchcio" />
+    <meta name="twitter:title" content="Digital transformation strategies: Progress in telecom, banking" />
+    <meta name="twitter:description" content="Digital transformation strategies are making the most progress in telecom, banking, utilities and education, according to market researcher Ovum." />

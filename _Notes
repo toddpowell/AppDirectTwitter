@@ -17,14 +17,14 @@ I could write some code to crawl the target sites for the summary data, but that
 
 
 My Tweet Object:
-var tweet = {
-    id:
-    user-name:
-    created-at:
-    full-text:
-    summary-url:            // same as summary-site?
-    summary-card:           // what's this for?
-    summary-site:
-    summary-title:
-    summary-description:    // same as full-text?
-}
+        var tweetObj = {
+          id:                 tweet.id_str,
+          userName:           tweet.user.name,
+          createdAt:          tweet.created_at,   
+          fullText:           tweet.full_text,
+          summaryUrl:         summaryUrl,   // same as summary-site?
+          summaryCard:        null,         // what's this for?
+          summarySite:        null,
+          summaryTitle:       null,
+          summaryDescription: null          // same as full-text?
+        }  

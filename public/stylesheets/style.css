@@ -1,14 +1,18 @@
-/* body {
+body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-*/
+
 a {
   color: #3b94d9;
 }
 
 .account-title {
   font-size: 2em;
+}
+
+#tweets-header {
+  text-align: center;
 }
 
 .EmbeddedTweet-tweet {

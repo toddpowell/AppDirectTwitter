@@ -1,14 +1,31 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-{{!-- <h1>Tweets {{title}}</h1>
-<p>Tweets {{title}}</p> --}}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="#">{{title}}</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li class="active"><a href="tweets">Tweets</a></li>
+                <li><a href="settings">Settings</a></li>
+                <li><a href="about">About</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-{{!-- <p>Tweets</p> --}}
-{{!-- {{tweets}} --}}
+<div id="tweets-header"><h1>Tweets</h1></div>
 
-
-
-<div class="container"> 
+<div id="tweets-container" class="container"> 
   <div class="row">
     <div class="col-sm-4 timeline-column">
         <div class="account-title">Tweets by @AppDirect</div>
@@ -96,7 +113,7 @@
             <blockquote class="twitter-tweet Tweet h-entry js-tweetIdInfo subject expanded is-deciderHtmlWhitespace" cite="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-tweet-id="{{this.id}}" data-scribe="section:subject">
                 <div class="Tweet-header u-cf">
                     <div class="Tweet-brand u-floatRight">
-                        <a href="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-scribe="element:logo">
+                        <a href="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-scribe="element:logo" target="_blank">
                             <span class="FollowButton-bird">
                                 <div class="Icon Icon--twitter" aria-label="View on Twitter" title="View on Twitter" role="presentation">
                                 Follow</div>
@@ -105,7 +122,7 @@
                     </div>
 
                     <div class="TweetAuthor js-inViewportScribingTarget js-aBScribingTarget" data-scribe="component:author">
-                        <a class="TweetAuthor-link Identity u-linkBlend" data-scribe="element:user_link" href="https://twitter.com/{{this.screenName}}" aria-label="{{this.screenName}} (screen name: {{this.screenName}})">
+                        <a class="TweetAuthor-link Identity u-linkBlend" data-scribe="element:user_link" href="https://twitter.com/{{this.screenName}}" aria-label="{{this.screenName}} (screen name: {{this.screenName}})" target="_blank">
                             <span class="TweetAuthor-avatar Identity-avatar">
                                 <img class="Avatar Avatar--edge" data-scribe="element:avatar" data-src-2x="{{this.profileImageUrl}}" alt="" data-src-1x="{{this.profileImageUrl}}" src="{{this.profileImageUrl}}">
                             </span>
@@ -121,19 +138,21 @@
                 
                 <div class="u-hiddenVisually js-inViewportScribingTarget"></div>
                 <p class="Tweet-text e-entry-title" lang="en" dir="ltr">
-                    {{this.fullText}}
+                    {{{this.fullText}}}
                 </p>
 
-                <a href="{{this.summaryUrl}}">
+                {{#if this.summaryUrl}}
+                <a href="{{this.summaryUrl}}" target="_blank">
                     <div class="summary-card">
-                        <p>summary-site: {{this.summarySite}}</p>
-                        <p>summary-title: {{this.summaryTitle}}</p>
-                        <p>summary-description: {{this.summaryDescription}}</p>
+                        {{!-- <p>summary-site: {{this.summarySite}}</p> --}}
+                        <p>{{this.summaryTitle}}</p>
+                        <p>{{this.summaryDescription}}</p>
                     </div>
                 </a>
+                {{/if}}
 
                 <div class="Tweet-metadata dateline">      
-                    <a class="u-linkBlend u-url customisable-highlight long-permalink" data-datetime="{{this.createdAt}}" data-scribe="element:full_timestamp" href="https://twitter.com/{{this.screenName}}/status/{{this.id}}">
+                    <a class="u-linkBlend u-url customisable-highlight long-permalink" data-datetime="{{this.createdAt}}" data-scribe="element:full_timestamp" href="https://twitter.com/{{this.screenName}}/status/{{this.id}}" target="_blank">
                         <time class="dt-updated" datetime="{{this.createdAt}}" pubdate="" title="Time posted: {{this.createdAt}}">{{this.createdAt}}</time>
                     </a>
                 </div>
@@ -142,21 +161,21 @@
 
                 <ul class="Tweet-actions" data-scribe="component:actions" role="menu" aria-label="Tweet actions">
                     <li class="Tweet-action">
-                        <a class="TweetAction TweetAction--replyEdge web-intent" href="https://twitter.com/intent/tweet?in_reply_to={{this.id}}" data-scribe="element:reply">
+                        <a class="TweetAction TweetAction--replyEdge web-intent" href="https://twitter.com/intent/tweet?in_reply_to={{this.id}}" data-scribe="element:reply" target="_blank">
                             <div class="Icon Icon--reply TweetAction-icon Icon--replyEdge" aria-label="Reply" title="Reply" role="img"></div>
                             <span class="TweetAction-stat" data-scribe="element:reply_count" aria-hidden="true"></span>
                             <span class="u-hiddenVisually"> Reply</span>
                         </a>
                     </li>
                     <li class="Tweet-action">
-                        <a class="TweetAction TweetAction--retweetEdge web-intent" href="https://twitter.com/intent/retweet?tweet_id={{this.id}}" data-scribe="element:retweet">
+                        <a class="TweetAction TweetAction--retweetEdge web-intent" href="https://twitter.com/intent/retweet?tweet_id={{this.id}}" data-scribe="element:retweet" target="_blank">
                             <div class="Icon Icon--retweet TweetAction-icon Icon--retweetEdge" aria-label="Retweet" title="Retweet" role="img"></div>
                             <span class="TweetAction-stat" data-scribe="element:retweet_count" aria-hidden="true"></span>
                             <span class="u-hiddenVisually"> Retweet</span>
                         </a>
                     </li>
                     <li class="Tweet-action">
-                        <a class="TweetAction TweetAction--heartEdge web-intent" href="https://twitter.com/intent/like?tweet_id={{this.id}}" data-scribe="element:heart">
+                        <a class="TweetAction TweetAction--heartEdge web-intent" href="https://twitter.com/intent/like?tweet_id={{this.id}}" data-scribe="element:heart" target="_blank">
                             <div class="Icon Icon--heart TweetAction-icon Icon--heartEdge" aria-label="Like" title="Like" role="img"></div>
                             <span class="TweetAction-stat" data-scribe="element:heart_count" aria-hidden="true"></span>
                             <span class="u-hiddenVisually"> Like</span>
@@ -174,7 +193,7 @@
             <blockquote class="twitter-tweet Tweet h-entry js-tweetIdInfo subject expanded is-deciderHtmlWhitespace" cite="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-tweet-id="{{this.id}}" data-scribe="section:subject">
                 <div class="Tweet-header u-cf">
                     <div class="Tweet-brand u-floatRight">
-                        <a href="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-scribe="element:logo">
+                        <a href="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-scribe="element:logo" target="_blank">
                             <span class="FollowButton-bird">
                                 <div class="Icon Icon--twitter" aria-label="View on Twitter" title="View on Twitter" role="presentation">
                                 Follow</div>
@@ -183,7 +202,7 @@
                     </div>
 
                     <div class="TweetAuthor js-inViewportScribingTarget js-aBScribingTarget" data-scribe="component:author">
-                        <a class="TweetAuthor-link Identity u-linkBlend" data-scribe="element:user_link" href="https://twitter.com/{{this.screenName}}" aria-label="{{this.screenName}} (screen name: {{this.screenName}})">
+                        <a class="TweetAuthor-link Identity u-linkBlend" data-scribe="element:user_link" href="https://twitter.com/{{this.screenName}}" aria-label="{{this.screenName}} (screen name: {{this.screenName}})" target="_blank">
                             <span class="TweetAuthor-avatar Identity-avatar">
                                 <img class="Avatar Avatar--edge" data-scribe="element:avatar" data-src-2x="{{this.profileImageUrl}}" alt="" data-src-1x="{{this.profileImageUrl}}" src="{{this.profileImageUrl}}">
                             </span>
@@ -199,19 +218,21 @@
                 
                 <div class="u-hiddenVisually js-inViewportScribingTarget"></div>
                 <p class="Tweet-text e-entry-title" lang="en" dir="ltr">
-                    {{this.fullText}}
+                    {{{this.fullText}}}
                 </p>
 
-                <a href="{{this.summaryUrl}}">
+                {{#if this.summaryUrl}}
+                <a href="{{this.summaryUrl}}" target="_blank">
                     <div class="summary-card">
-                        <p>summary-site: {{this.summarySite}}</p>
-                        <p>summary-title: {{this.summaryTitle}}</p>
-                        <p>summary-description: {{this.summaryDescription}}</p>
+                        {{!-- <p>summary-site: {{this.summarySite}}</p> --}}
+                        <p>{{this.summaryTitle}}</p>
+                        <p>{{this.summaryDescription}}</p>
                     </div>
                 </a>
+                {{/if}}
 
                 <div class="Tweet-metadata dateline">      
-                    <a class="u-linkBlend u-url customisable-highlight long-permalink" data-datetime="{{this.createdAt}}" data-scribe="element:full_timestamp" href="https://twitter.com/{{this.screenName}}/status/{{this.id}}">
+                    <a class="u-linkBlend u-url customisable-highlight long-permalink" data-datetime="{{this.createdAt}}" data-scribe="element:full_timestamp" href="https://twitter.com/{{this.screenName}}/status/{{this.id}}" target="_blank">
                         <time class="dt-updated" datetime="{{this.createdAt}}" pubdate="" title="Time posted: {{this.createdAt}}">{{this.createdAt}}</time>
                     </a>
                 </div>
@@ -220,21 +241,21 @@
 
                 <ul class="Tweet-actions" data-scribe="component:actions" role="menu" aria-label="Tweet actions">
                     <li class="Tweet-action">
-                        <a class="TweetAction TweetAction--replyEdge web-intent" href="https://twitter.com/intent/tweet?in_reply_to={{this.id}}" data-scribe="element:reply">
+                        <a class="TweetAction TweetAction--replyEdge web-intent" href="https://twitter.com/intent/tweet?in_reply_to={{this.id}}" data-scribe="element:reply" target="_blank">
                             <div class="Icon Icon--reply TweetAction-icon Icon--replyEdge" aria-label="Reply" title="Reply" role="img"></div>
                             <span class="TweetAction-stat" data-scribe="element:reply_count" aria-hidden="true"></span>
                             <span class="u-hiddenVisually"> Reply</span>
                         </a>
                     </li>
                     <li class="Tweet-action">
-                        <a class="TweetAction TweetAction--retweetEdge web-intent" href="https://twitter.com/intent/retweet?tweet_id={{this.id}}" data-scribe="element:retweet">
+                        <a class="TweetAction TweetAction--retweetEdge web-intent" href="https://twitter.com/intent/retweet?tweet_id={{this.id}}" data-scribe="element:retweet" target="_blank">
                             <div class="Icon Icon--retweet TweetAction-icon Icon--retweetEdge" aria-label="Retweet" title="Retweet" role="img"></div>
                             <span class="TweetAction-stat" data-scribe="element:retweet_count" aria-hidden="true"></span>
                             <span class="u-hiddenVisually"> Retweet</span>
                         </a>
                     </li>
                     <li class="Tweet-action">
-                        <a class="TweetAction TweetAction--heartEdge web-intent" href="https://twitter.com/intent/like?tweet_id={{this.id}}" data-scribe="element:heart">
+                        <a class="TweetAction TweetAction--heartEdge web-intent" href="https://twitter.com/intent/like?tweet_id={{this.id}}" data-scribe="element:heart" target="_blank">
                             <div class="Icon Icon--heart TweetAction-icon Icon--heartEdge" aria-label="Like" title="Like" role="img"></div>
                             <span class="TweetAction-stat" data-scribe="element:heart_count" aria-hidden="true"></span>
                             <span class="u-hiddenVisually"> Like</span>

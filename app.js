@@ -7,8 +7,9 @@ var bodyParser = require('body-parser');
 
 var home = require('./routes/home');
 var tweets = require('./routes/tweets');
-var embed = require('./routes/embed');
+var settings = require('./routes/settings');
 var about = require('./routes/about');
+var embed = require('./routes/embed');
 
 var app = express();
 
@@ -26,8 +27,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', home);
 app.use('/tweets', tweets);
-app.use('/embed', embed);
+app.use('/settings', settings);
 app.use('/about', about);
+app.use('/embed', embed);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

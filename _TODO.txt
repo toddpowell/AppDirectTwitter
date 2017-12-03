@@ -1,2 +1,19 @@
 - Parse URLs and @ to add links
 - Add css, js, menu, etc to layout.hbs
+- Add retweet and like counts
+- Format date
+- Sort array by date 
+array.sort(function(a,b){
+  // Turn your strings into dates, and then subtract them
+  // to get a value that is either negative, positive, or zero.
+  return new Date(b.date) - new Date(a.date);
+});
+- Use correct avatar images
+- Fix callbacks
+const getInfo = async () => {
+ console.log(await axios.get('/users'))
+ console.log(await getGroups())
+ console.log(await getFavorites())
+ return 'all done';
+}
+getInfo();

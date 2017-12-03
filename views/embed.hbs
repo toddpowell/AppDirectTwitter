@@ -1,0 +1,46 @@
+<!-- <div id="tweet" tweetID="515490786800963584"></div> -->
+<h2>twttr.widgets.createTweet</h2>
+<div id="tweet" tweetID="934842942149214208"></div>
+
+<script sync src="https://platform.twitter.com/widgets.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script>
+
+  window.onload = (function(){
+
+    var tweet = document.getElementById("tweet");
+    var id = tweet.getAttribute("tweetID");
+    var adTweets = {{appDirectTweets}}
+    twttr.widgets.createTweet(
+      id, tweet, 
+      {
+        conversation : 'none',    // or all
+        cards        : 'hidden',  // or visible 
+        linkColor    : '#cc0000', // default is blue
+        theme        : 'light'    // or dark
+      })
+    .then (function (el) {
+      el.contentDocument.querySelector(".footer").style.display = "none";
+    });
+
+  });
+
+</script>
+
+
+<!-- <a class="twitter-timeline"
+href="https://twitter.com/appdirect"
+data-width="300"
+data-height="300">
+Tweets by @AppDirect
+</a>
+
+<a class="twitter-timeline"
+href="https://twitter.com/TwitterDev"
+data-chrome="nofooter noborders">
+Tweets by @TwitterDev
+</a> -->
+
+
+
+

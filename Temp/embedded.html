@@ -1,0 +1,108 @@
+<!-- <div id="tweet" tweetID="515490786800963584"></div> -->
+<h2>twttr.widgets.createTweet</h2>
+<div id="tweet" tweetID="934842942149214208"></div>
+
+<script sync src="https://platform.twitter.com/widgets.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script>
+
+  window.onload = (function(){
+
+    var tweet = document.getElementById("tweet");
+    var id = tweet.getAttribute("tweetID");
+
+    id = "936629480302428160";
+    twttr.widgets.createTweet(
+      id, tweet, 
+      {
+        conversation : 'none',    // or all
+        cards        : 'hidden',  // or visible 
+        linkColor    : '#cc0000', // default is blue
+        theme        : 'light'    // or dark
+      })
+    .then (function (el) {
+      el.contentDocument.querySelector(".footer").style.display = "none";
+    });
+
+    id = "934842942149214208";
+    twttr.widgets.createTweet(
+      id, tweet, 
+      {
+        conversation : 'none',    // or all
+        cards        : 'hidden',  // or visible 
+        linkColor    : '#cc0000', // default is blue
+        theme        : 'light'    // or dark
+      })
+    .then (function (el) {
+      el.contentDocument.querySelector(".footer").style.display = "none";
+    });
+
+
+  });
+
+</script>
+
+
+<!-- <a class="twitter-timeline"
+href="https://twitter.com/appdirect"
+data-width="300"
+data-height="300">
+Tweets by @AppDirect
+</a>
+
+<a class="twitter-timeline"
+href="https://twitter.com/TwitterDev"
+data-chrome="nofooter noborders">
+Tweets by @TwitterDev
+</a> -->
+
+<hr>
+
+<style>
+  .timeline-column {
+    /* border: 1px solid black; */
+  }
+</style>
+<h2>Embedded Timeline</h2>
+<div class="container"> 
+  <div class="row">
+    <div class="col-sm-4 timeline-column">
+      <a class="twitter-timeline"
+        href="https://twitter.com/appdirect"
+        data-width="300"
+        data-tweet-limit="3"
+      >
+        Tweets by @AppDirect
+      </a>  
+    </div>
+    <div class="col-sm-4 timeline-column">
+      <a class="twitter-timeline"
+        href="https://twitter.com/laughingsquid"
+        data-width="300"
+        data-tweet-limit="3"
+      >
+        Tweets by @LaughingSquid
+      </a>
+    </div>
+    <div class="col-sm-4 timeline-column">
+      <a class="twitter-timeline"
+        href="https://twitter.com/techcrunch"
+        data-width="300"
+        data-tweet-limit="3"
+      >
+        Tweets by @TechCrunch
+      </a>
+    </div>    
+  </div>
+</div>
+
+
+<!-- <a class="twitter-timeline"
+  href="https://twitter.com/appdirect"
+  data-width="300"
+  data-tweet-limit="3"
+>
+Tweets by @AppDirect
+</a> -->
+
+

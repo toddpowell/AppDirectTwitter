@@ -17,7 +17,7 @@ var client = new Twitter({
   
 var params = {
     screen_name: '', 
-    count: 3, 
+    count: 30, 
     tweet_mode: "extended"      // Use this to avoid truncation
 };
 
@@ -37,23 +37,16 @@ function gotData(error, data, response) {
         console.log('----------------------');
 
         // Retweets
-        console.log("- retweeted_status = " + tweet.retweeted_status);
         if (tweet.retweeted_status) {
           // true
-          //console.log("RETWEETED id_str =  " + tweet.retweeted_status.id_str);
-          //console.log("RETWEETED full_text =  " + tweet.retweeted_status.full_text);
         } else {
           //false
         }
-
-        console.log("- id_str = " + tweet.id_str);
-        console.log("- name = " + tweet.user.name);
-        console.log("- screen name = " + tweet.user.screen_name);
-        //console.log("- user.description = " + tweet.user.description);        
-        console.log("- created = " + tweet.created_at);
-        console.log("- full_text = " + tweet.full_text);  // Need to parse for links
-        
-        var summaryUrl = tweet.entities.urls[0].url || null;
+              
+        var summaryUrl = null;
+        if (tweet.entities.urls[0]) {
+          summaryUrl = tweet.entities.urls[0].url;
+        }
 
         var tweetObj = {
           id:                 tweet.id_str,
@@ -71,7 +64,6 @@ function gotData(error, data, response) {
         // Summary card
         var summaryData;
         if (summaryUrl) {
-          console.log("- summary card url = " + tweet.entities.urls[0].url);
           // Scrape site for Twitter meta data - This is what Twitter does to build their summary cards
           addSummaryData(tweet.entities.urls[0].url, tweetObj);
         } else {
@@ -84,6 +76,9 @@ function gotData(error, data, response) {
           }
         }
     }
+    console.log("appDirectTweets: " + appDirectTweets.length);
+    console.log("laughingSquidTweets: " + laughingSquidTweets.length);
+    console.log("techCrunchTweets: " + techCrunchTweets.length);
   } 
 }
 
@@ -99,8 +94,6 @@ function addSummaryData(url, twitterObj){
     $site = $('meta[name="twitter:site"]').attr('content'),
     $title = $('meta[name="twitter:title"]').attr('content'),
     $description = $('meta[name="twitter:description"]').attr('content'),
-    console.log("!!! Got Summary !!!");
-    console.log(">>> title : " + $title);
 
     // Add summary card data to tweet objecte
     twitterObj.summaryCard = $card;
@@ -115,7 +108,6 @@ function addSummaryData(url, twitterObj){
     } else if (twitterObj.screenName == "TechCrunch") {
       techCrunchTweets.push(twitterObj);    
     }
-    console.log("--- pushed");
   });
 }
  
@@ -140,7 +132,7 @@ router.get('/', function(req, res, next) {
       laughingSquidTweets: laughingSquidTweets,
       techCrunchTweets: techCrunchTweets
     });
-}, 3000);
+  }, 5000);
 
   // res.render('tweets', {
   //   title: "AppDirect Twitter",
@@ -149,5 +141,14 @@ router.get('/', function(req, res, next) {
   //   techCrunchTweets: techCrunchTweets
   // });
 });
+
+function renderTweets(){
+  res.render('tweets', {
+    title: "AppDirect Twitter",
+    appDirectTweets: appDirectTweets,
+    laughingSquidTweets: laughingSquidTweets,
+    techCrunchTweets: techCrunchTweets
+  }); 
+}
 
 module.exports = router;

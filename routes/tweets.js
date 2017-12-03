@@ -74,6 +74,7 @@ function gotData(error, data, response) {
           screenName:         tweet.user.screen_name,
           createdAt:          formattedDate,   
           fullText:           tweet.full_text,
+          profileImageUrl: tweet.user.profile_image_url,
           summaryUrl:         summaryUrl,   // same as summary-site?
           summaryCard:        null,         // what's this for?
           summarySite:        null,

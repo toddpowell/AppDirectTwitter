@@ -28,3 +28,10 @@ My Tweet Object:
           summaryTitle:       null,
           summaryDescription: null          // same as full-text?
         }  
+
+URLs:
+profile_background_image_url:"http://pbs.twimg.com/profile_background_images/830856509/0e0fabf0437a68b0fdf92bb3219279a0.png"
+profile_background_image_url_https:"https://pbs.twimg.com/profile_background_images/830856509/0e0fabf0437a68b0fdf92bb3219279a0.png"
+profile_banner_url:"https://pbs.twimg.com/profile_banners/154310289/1504623002"
+profile_image_url:"http://pbs.twimg.com/profile_images/890252563190226944/lP9wOBFy_normal.jpg"
+profile_image_url_https:"https://pbs.twimg.com/profile_images/890252563190226944/lP9wOBFy_normal.jpg"        

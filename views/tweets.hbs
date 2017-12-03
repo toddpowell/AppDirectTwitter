@@ -10,9 +10,9 @@
   <div class="row">
     <div class="col-sm-4 timeline-column">
         <div class="account-title">Tweets by @AppDirect</div>
-        {{#each tweets}}
+        {{#each appDirectTweets}}
             <hr>
-            <div>
+            <blockquote class="twitter-tweet">
                 <p>ID: {{this.id}}</p>
                 <p>user-name: {{this.userName}}</p>            
                 <p>created-at: {{this.created-at}}</p>
@@ -22,19 +22,41 @@
                 <p>summary-site: {{this.summarySite}}</p>
                 <p>summary-title: {{this.summaryTitle}}</p>
                 <p>summary-description: {{this.summaryDescription}}</p>
-            </div>
+            </blockquote>
         {{/each}}
     </div>
     <div class="col-sm-4 timeline-column">
         <div class="account-title">Tweets by @LaughingSquid</div>
-        {{#each tweets}}
-            <li>{{this}}</li>
+        {{#each laughingSquidTweets}}
+            <hr>
+            <blockquote class="twitter-tweet">
+                <p>ID: {{this.id}}</p>
+                <p>user-name: {{this.userName}}</p>            
+                <p>created-at: {{this.created-at}}</p>
+                <p>full-text : {{this.fullText}}</p>
+                <p>summary-url: {{this.summaryUrl}}</p>
+                <p>summary-card: {{this.summaryCard}}</p>
+                <p>summary-site: {{this.summarySite}}</p>
+                <p>summary-title: {{this.summaryTitle}}</p>
+                <p>summary-description: {{this.summaryDescription}}</p>
+            </blockquote>
         {{/each}}
     </div>
     <div class="col-sm-4 timeline-column">
         <div class="account-title">Tweets by @TechCrunch</div>
-        {{#each tweets}}
-            <li>{{this}}</li>
+        {{#each techCrunchTweets}}
+            <hr>
+            <blockquote class="twitter-tweet">
+                <p>ID: {{this.id}}</p>
+                <p>user-name: {{this.userName}}</p>            
+                <p>created-at: {{this.created-at}}</p>
+                <p>full-text : {{this.fullText}}</p>
+                <p>summary-url: {{this.summaryUrl}}</p>
+                <p>summary-card: {{this.summaryCard}}</p>
+                <p>summary-site: {{this.summarySite}}</p>
+                <p>summary-title: {{this.summaryTitle}}</p>
+                <p>summary-description: {{this.summaryDescription}}</p>
+            </blockquote>
         {{/each}}
     </div>    
   </div>

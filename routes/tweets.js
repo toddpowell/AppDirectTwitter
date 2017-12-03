@@ -16,15 +16,20 @@ var client = new Twitter({
   });
   
 var params = {
-    screen_name: 'appdirect', 
+    screen_name: '', 
     count: 3, 
     tweet_mode: "extended"      // Use this to avoid truncation
 };
 
-var tweetArray = [];
+var appDirectTweets = [];
+var laughingSquidTweets = [];
+var techCrunchTweets = [];
+
 function gotData(error, data, response) {
   if (!error) {
-    tweetArray = [];
+    appDirectTweets = [];
+    laughingSquidTweets = [];
+    techCrunchTweets = [];
       //console.log(data);
     console.log("# of tweets: " + data.length);
 
@@ -43,6 +48,7 @@ function gotData(error, data, response) {
 
         console.log("- id_str = " + tweet.id_str);
         console.log("- name = " + tweet.user.name);
+        console.log("- screen name = " + tweet.user.screen_name);
         //console.log("- user.description = " + tweet.user.description);        
         console.log("- created = " + tweet.created_at);
         console.log("- full_text = " + tweet.full_text);  // Need to parse for links
@@ -52,6 +58,7 @@ function gotData(error, data, response) {
         var tweetObj = {
           id:                 tweet.id_str,
           userName:           tweet.user.name,
+          screenName:         tweet.user.screen_name,
           createdAt:          tweet.created_at,   
           fullText:           tweet.full_text,
           summaryUrl:         summaryUrl,   // same as summary-site?
@@ -67,8 +74,14 @@ function gotData(error, data, response) {
           console.log("- summary card url = " + tweet.entities.urls[0].url);
           // Scrape site for Twitter meta data - This is what Twitter does to build their summary cards
           addSummaryData(tweet.entities.urls[0].url, tweetObj);
-        } else {      
-          tweetArray.push(tweetObj);
+        } else {
+          if (tweet.user.screen_name == "AppDirect") {  
+            appDirectTweets.push(tweetObj);
+          } else if (tweet.user.screen_name == "Laughing Squid") {  
+            laughingSquidTweets.push(tweetObj);
+          } else if (tweet.user.screen_name == "TechCrunch") {  
+            techCrunchTweets.push(tweetObj);
+          }
         }
     }
   } 
@@ -95,7 +108,13 @@ function addSummaryData(url, twitterObj){
     twitterObj.summaryTitle = $title;
     twitterObj.summaryDescription = $description;
 
-    tweetArray.push(twitterObj);    
+    if (twitterObj.screenName == "AppDirect") {
+      appDirectTweets.push(twitterObj);    
+    } else if (twitterObj.screenName == "LaughingSquid") {
+      laughingSquidTweets.push(twitterObj);    
+    } else if (twitterObj.screenName == "TechCrunch") {
+      techCrunchTweets.push(twitterObj);    
+    }
     console.log("--- pushed");
   });
 }
@@ -104,11 +123,20 @@ function addSummaryData(url, twitterObj){
 // Router stuff //
 //////////////////
 router.get('/', function(req, res, next) {
+  params.screen_name = "appdirect";
+  client.get('statuses/user_timeline', params, gotData );
+
+  params.screen_name = "laughingsquid";
+  client.get('statuses/user_timeline', params, gotData );
+  
+  params.screen_name = "techcrunch";
   client.get('statuses/user_timeline', params, gotData );
 
   res.render('tweets', {
     title: "AppDirect Twitter",
-    tweets: tweetArray
+    appDirectTweets: appDirectTweets,
+    laughingSquidTweets: laughingSquidTweets,
+    techCrunchTweets: techCrunchTweets
   });
 });
 

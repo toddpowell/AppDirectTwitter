@@ -132,12 +132,22 @@ router.get('/', function(req, res, next) {
   params.screen_name = "techcrunch";
   client.get('statuses/user_timeline', params, gotData );
 
-  res.render('tweets', {
-    title: "AppDirect Twitter",
-    appDirectTweets: appDirectTweets,
-    laughingSquidTweets: laughingSquidTweets,
-    techCrunchTweets: techCrunchTweets
-  });
+  setTimeout(function(){
+    console.log("time's up");
+    res.render('tweets', {
+      title: "AppDirect Twitter",
+      appDirectTweets: appDirectTweets,
+      laughingSquidTweets: laughingSquidTweets,
+      techCrunchTweets: techCrunchTweets
+    });
+}, 3000);
+
+  // res.render('tweets', {
+  //   title: "AppDirect Twitter",
+  //   appDirectTweets: appDirectTweets,
+  //   laughingSquidTweets: laughingSquidTweets,
+  //   techCrunchTweets: techCrunchTweets
+  // });
 });
 
 module.exports = router;

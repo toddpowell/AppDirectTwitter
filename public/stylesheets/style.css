@@ -46,3 +46,25 @@ blockquote.twitter-tweet a:hover,
 blockquote.twitter-tweet a:focus {
   text-decoration: underline;
 }
+
+blockquote .summary-card {
+  border-color: black;
+  border-radius: 5px; 
+  border-style: solid;
+  border-width: 1px;
+  padding: 0 16px 16px 16px;
+}
+blockquote .summary-card a:hover {
+  text-decoration: none;
+}
+
+blockquote.tcu-imageWrapper {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  bottom: -1px;
+  right: -1px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

@@ -65,15 +65,22 @@ function gotData(error, data, response) {
           summaryUrl = tweet.entities.urls[0].url;
         }
 
+        // Format date
         let created = tweet.created_at;
         let longDate = new Date(created);
         let formattedDate = longDate.toDateString();
-        var tweetObj = {
+
+        // Replace text links with anchor tags
+        // replace(/(\w+\.\w+)/g, "<a href='$1' target='_blank'>$1</a>");
+        let fullText = tweet.full_text;
+        let linkedText = linkify(fullText);
+
+        let tweetObj = {
           id:                 tweet.id_str,
           userName:           tweet.user.name,
           screenName:         tweet.user.screen_name,
           createdAt:          formattedDate,   
-          fullText:           tweet.full_text,
+          fullText:           linkedText,
           profileImageUrl: tweet.user.profile_image_url,
           summaryUrl:         summaryUrl,   // same as summary-site?
           summaryCard:        null,         // what's this for?
@@ -131,6 +138,23 @@ function addSummaryData(url, twitterObj){
     }
   });
 }
+
+// Replace plain text links with anchor tags
+function linkify(plainText) {
+  // http://, https://, ftp://
+  var urlPattern = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
+
+  // www. sans http:// or https://
+  var pseudoUrlPattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+
+  // Email addresses
+  var emailAddressPattern = /[\w.]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+/gim;
+
+  return plainText
+      .replace(urlPattern, '<a href="$&" target="_blank">$&</a>')
+      .replace(pseudoUrlPattern, '$1<a href="http://$2" target="_blank">$2</a>')
+      .replace(emailAddressPattern, '<a href="mailto:$&" target="_blank">$&</a>');
+};
 
 //////////////////
 // Router stuff //

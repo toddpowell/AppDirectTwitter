@@ -1,40 +1,57 @@
-var express = require('express');
-var router = express.Router();
-var request = require('request');
-var cheerio = require('cheerio');
+let express = require('express');
+let router = express.Router();
+let request = require('request');
+let async = require('async');
+let cheerio = require('cheerio');
 
 ///////////////////
 // Twitter stuff //
 ///////////////////
-var Twitter = require('twitter');
+let Twitter = require('twitter');
 
-var client = new Twitter({
+let client = new Twitter({
     consumer_key: 'CXXTTkKuxKbrr8ncGnrTGhzVs',
     consumer_secret: '7T06Wc8Ttl2zufiYFF9icDX51De5QQzdHKPMijfjJxhgOegifr',
     access_token_key: '935315246016708608-h35nv8ckMjPy5ZYbLf2W4vCTUVQSaY1',
     access_token_secret: 'e92KsqJYtHR6BbgxfQ1CqDkVaXF5OGW953o7duQlLT2Oq'
   });
   
-var params = {
+let params = {
     screen_name: '', 
     count: 30, 
     tweet_mode: "extended"      // Use this to avoid truncation
 };
 
-var appDirectTweets = [];
-var laughingSquidTweets = [];
-var techCrunchTweets = [];
+let appDirectTweets = [];
+let laughingSquidTweets = [];
+let techCrunchTweets = [];
+
+let getAppDirect = async function(callback){
+  appDirectTweets = [];
+  params.screen_name = "appdirect";
+  client.get('statuses/user_timeline', params, gotData );
+  callback(null, appDirectTweets);
+}
+let getLaughingSquid = async function(callback){
+  laughingSquidTweets = [];
+  params.screen_name = "laughingsquid";
+  client.get('statuses/user_timeline', params, gotData );
+  callback(null, laughingSquidTweets);
+}
+let getTechCrunch = async function(callback){
+  techCrunchTweets = [];
+  params.screen_name = "techcrunch";
+  client.get('statuses/user_timeline', params, gotData );
+  callback(null, techCrunchTweets);
+}
 
 function gotData(error, data, response) {
   if (!error) {
-    appDirectTweets = [];
-    laughingSquidTweets = [];
-    techCrunchTweets = [];
-      //console.log(data);
+    //console.log(data);
     console.log("# of tweets: " + data.length);
 
     for (tweet of data) {
-        console.log('----------------------');
+        //console.log('----------------------');
 
         // Retweets
         if (tweet.retweeted_status) {
@@ -48,11 +65,14 @@ function gotData(error, data, response) {
           summaryUrl = tweet.entities.urls[0].url;
         }
 
+        let created = tweet.created_at;
+        let longDate = new Date(created);
+        let formattedDate = longDate.toDateString();
         var tweetObj = {
           id:                 tweet.id_str,
           userName:           tweet.user.name,
           screenName:         tweet.user.screen_name,
-          createdAt:          tweet.created_at,   
+          createdAt:          formattedDate,   
           fullText:           tweet.full_text,
           summaryUrl:         summaryUrl,   // same as summary-site?
           summaryCard:        null,         // what's this for?
@@ -69,7 +89,7 @@ function gotData(error, data, response) {
         } else {
           if (tweet.user.screen_name == "AppDirect") {  
             appDirectTweets.push(tweetObj);
-          } else if (tweet.user.screen_name == "Laughing Squid") {  
+          } else if (tweet.user.screen_name == "LaughingSquid") {  
             laughingSquidTweets.push(tweetObj);
           } else if (tweet.user.screen_name == "TechCrunch") {  
             techCrunchTweets.push(tweetObj);
@@ -110,45 +130,41 @@ function addSummaryData(url, twitterObj){
     }
   });
 }
- 
+
 //////////////////
 // Router stuff //
 //////////////////
-router.get('/', function(req, res, next) {
-  params.screen_name = "appdirect";
-  client.get('statuses/user_timeline', params, gotData );
+router.get('/', async function(req, res, next) {
+  let functionStack = [];
+  functionStack.push(getAppDirect);
+  functionStack.push(getLaughingSquid);
+  functionStack.push(getTechCrunch);
 
-  params.screen_name = "laughingsquid";
-  client.get('statuses/user_timeline', params, gotData );
-  
-  params.screen_name = "techcrunch";
-  client.get('statuses/user_timeline', params, gotData );
+  async.parallel(functionStack, function(err, result){
+    console.log(result);
+    setTimeout(function(){
+      // Sort tweets by date
+      appDirectTweets.sort(function(a,b){
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+      laughingSquidTweets.sort(function(a,b){
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+      techCrunchTweets.sort(function(a,b){
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
 
-  setTimeout(function(){
-    console.log("time's up");
-    res.render('tweets', {
-      title: "AppDirect Twitter",
-      appDirectTweets: appDirectTweets,
-      laughingSquidTweets: laughingSquidTweets,
-      techCrunchTweets: techCrunchTweets
-    });
-  }, 5000);
-
-  // res.render('tweets', {
-  //   title: "AppDirect Twitter",
-  //   appDirectTweets: appDirectTweets,
-  //   laughingSquidTweets: laughingSquidTweets,
-  //   techCrunchTweets: techCrunchTweets
-  // });
+      res.render('tweets', {
+        title: "AppDirect Twitter",
+        appDirectTweets:      appDirectTweets,
+        laughingSquidTweets:  laughingSquidTweets,
+        techCrunchTweets:     techCrunchTweets
+      });
+      console.log("rendered page");
+    }, 5000);
+  });
 });
 
-function renderTweets(){
-  res.render('tweets', {
-    title: "AppDirect Twitter",
-    appDirectTweets: appDirectTweets,
-    laughingSquidTweets: laughingSquidTweets,
-    techCrunchTweets: techCrunchTweets
-  }); 
-}
+
 
 module.exports = router;

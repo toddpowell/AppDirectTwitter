@@ -165,19 +165,76 @@
     <div class="col-sm-4 timeline-column">
         <div class="account-title">Tweets by @TechCrunch</div>
         {{#each techCrunchTweets}}
-            <blockquote class="twitter-tweet">
-                <p>ID: {{this.id}}</p>
-                <p>user-name: {{this.userName}}</p>            
-                <p>created-at: {{this.created-at}}</p>
-                <p>full-text : {{this.fullText}}</p>
-                <a href="{{this.summaryUrl}}" target="_blank">
-                    <div class="summary-card">
-                        <p>summary-card: {{this.summaryCard}}</p>
-                        <p>summary-site: {{this.summarySite}}</p>
-                        <p>summary-title: {{this.summaryTitle}}</p>
-                        <p>summary-description: {{this.summaryDescription}}</p>
+            <blockquote class="twitter-tweet Tweet h-entry js-tweetIdInfo subject expanded is-deciderHtmlWhitespace" cite="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-tweet-id="{{this.id}}" data-scribe="section:subject">
+                <div class="Tweet-header u-cf">
+                    <div class="Tweet-brand u-floatRight">
+                        <a href="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-scribe="element:logo">
+                            <span class="FollowButton-bird">
+                                <div class="Icon Icon--twitter" aria-label="View on Twitter" title="View on Twitter" role="presentation">
+                                Follow</div>
+                            </span>
+                        </a>
                     </div>
-                </a>
+
+                    <div class="TweetAuthor js-inViewportScribingTarget js-aBScribingTarget" data-scribe="component:author">
+                        <a class="TweetAuthor-link Identity u-linkBlend" data-scribe="element:user_link" href="https://twitter.com/{{this.screenName}}" aria-label="{{this.screenName}} (screen name: {{this.screenName}})">
+                            <span class="TweetAuthor-avatar Identity-avatar">
+                                <img class="Avatar Avatar--edge" data-scribe="element:avatar" data-src-2x="https://pbs.twimg.com/profile_images/890252563190226944/lP9wOBFy_bigger.jpg" alt="" data-src-1x="https://pbs.twimg.com/profile_images/890252563190226944/lP9wOBFy_normal.jpg" src="https://pbs.twimg.com/profile_images/890252563190226944/lP9wOBFy_bigger.jpg">
+                            </span>
+                            <span class="TweetAuthor-decoratedName">
+                                <span class="TweetAuthor-name TweetAuthor-name--flex Identity-name customisable-highlight" title="{{this.screenName}}" data-scribe="element:name">{{this.screenName}}</span>
+                            </span>
+                            <span class="TweetAuthor-screenName Identity-screenName" title="@{{this.screenName}}" data-scribe="element:screen_name" dir="ltr">@{{this.screenName}}</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="Tweet-body e-entry-content" data-scribe="component:tweet">
+                
+                <div class="u-hiddenVisually js-inViewportScribingTarget"></div>
+                <p class="Tweet-text e-entry-title" lang="en" dir="ltr">
+                    {{this.fullText}}
+                </p>
+
+                <div class="summary-card">
+                    <p>summary-site: {{this.summarySite}}</p>
+                    <p>summary-title: {{this.summaryTitle}}</p>
+                    <p>summary-description: {{this.summaryDescription}}</p>
+                </div>
+
+                <div class="Tweet-metadata dateline">      
+                    <a class="u-linkBlend u-url customisable-highlight long-permalink" data-datetime="{{this.createdAt}}" data-scribe="element:full_timestamp" href="https://twitter.com/{{this.screenName}}/status/{{this.id}}">
+                        <time class="dt-updated" datetime="{{this.createdAt}}" pubdate="" title="Time posted: {{this.createdAt}}">{{this.createdAt}}</time>
+                    </a>
+                </div>
+
+                <div class="u-hiddenVisually js-aBScribingTarget"></div>
+
+                <ul class="Tweet-actions" data-scribe="component:actions" role="menu" aria-label="Tweet actions">
+                    <li class="Tweet-action">
+                        <a class="TweetAction TweetAction--replyEdge web-intent" href="https://twitter.com/intent/tweet?in_reply_to={{this.id}}" data-scribe="element:reply">
+                            <div class="Icon Icon--reply TweetAction-icon Icon--replyEdge" aria-label="Reply" title="Reply" role="img"></div>
+                            <span class="TweetAction-stat" data-scribe="element:reply_count" aria-hidden="true"></span>
+                            <span class="u-hiddenVisually"> Reply</span>
+                        </a>
+                    </li>
+                    <li class="Tweet-action">
+                        <a class="TweetAction TweetAction--retweetEdge web-intent" href="https://twitter.com/intent/retweet?tweet_id={{this.id}}" data-scribe="element:retweet">
+                            <div class="Icon Icon--retweet TweetAction-icon Icon--retweetEdge" aria-label="Retweet" title="Retweet" role="img"></div>
+                            <span class="TweetAction-stat" data-scribe="element:retweet_count" aria-hidden="true"></span>
+                            <span class="u-hiddenVisually"> Retweet</span>
+                        </a>
+                    </li>
+                    <li class="Tweet-action">
+                        <a class="TweetAction TweetAction--heartEdge web-intent" href="https://twitter.com/intent/like?tweet_id={{this.id}}" data-scribe="element:heart">
+                            <div class="Icon Icon--heart TweetAction-icon Icon--heartEdge" aria-label="Like" title="Like" role="img"></div>
+                            <span class="TweetAction-stat" data-scribe="element:heart_count" aria-hidden="true"></span>
+                            <span class="u-hiddenVisually"> Like</span>
+                        </a>
+                    </li>
+                </ul>
+
+                </div>
             </blockquote>
         {{/each}}
     </div>    

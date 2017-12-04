@@ -28,8 +28,8 @@
 <div id="tweets-container" class="container"> 
   <div class="row">
     <div class="col-sm-4 timeline-column">
-        <div class="account-title">Tweets by @{{userAccountATweets.0.screenName}}</div>
-        {{#each userAccountATweets}}
+        <div class="account-title">Tweets by @{{userAccountTweetsA.0.screenName}}</div>
+        {{#each userAccountTweetsA}}
             <blockquote class="twitter-tweet Tweet h-entry js-tweetIdInfo subject expanded is-deciderHtmlWhitespace" cite="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-tweet-id="{{this.id}}" data-scribe="section:subject">
                 {{#if retweeted}}
                     <p class="retweet-indicator">{{this.screenName}} retweeted</p>
@@ -111,8 +111,8 @@
         {{/each}}
     </div>
     <div class="col-sm-4 timeline-column">
-        <div class="account-title">Tweets by @{{userAccountBTweets.0.screenName}}</div>
-        {{#each userAccountBTweets}}
+        <div class="account-title">Tweets by @{{userAccountTweetsB.0.screenName}}</div>
+        {{#each userAccountTweetsB}}
             <blockquote class="twitter-tweet Tweet h-entry js-tweetIdInfo subject expanded is-deciderHtmlWhitespace" cite="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-tweet-id="{{this.id}}" data-scribe="section:subject">
                 {{#if retweeted}}
                     <p class="retweet-indicator">{{this.screenName}} retweeted</p>
@@ -194,8 +194,8 @@
         {{/each}}
     </div>
     <div class="col-sm-4 timeline-column">
-        <div class="account-title">Tweets by @{{userAccountCTweets.0.screenName}}</div>
-        {{#each userAccountCTweets}}
+        <div class="account-title">Tweets by @{{userAccountTweetsC.0.screenName}}</div>
+        {{#each userAccountTweetsC}}
             <blockquote class="twitter-tweet Tweet h-entry js-tweetIdInfo subject expanded is-deciderHtmlWhitespace" cite="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-tweet-id="{{this.id}}" data-scribe="section:subject">
                 {{#if retweeted}}
                     <p class="retweet-indicator">{{this.screenName}} retweeted</p>

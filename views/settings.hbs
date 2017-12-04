@@ -33,20 +33,20 @@
     </div>
     <label>Tweet Mode:</label>
     <div class="radio">
-        <label><input type="radio" name="optradio">Brief</label></div>
+        <label><input id="tweet-mode-brief" type="radio" name="optradio">Brief</label></div>
     <div class="radio">
-        <label><input type="radio" name="optradio">Verbose</label></div>
+        <label><input id="tweet-mode-extended" type="radio" name="optradio">Extended</label></div>
     <div class="form-group">
       <label for="user-account-1">User Account 1:</label>
-      <input type="user-account-1" class="form-control" id="user-account-1" placeholder="" name="max-tweets">
+      <input id="user-account-1" type="user-account-1" class="form-control" placeholder="" name="max-tweets">
     </div>
     <div class="form-group">
       <label for="user-account-2">User Account 2:</label>
-      <input type="user-account-2" class="form-control" id="user-account-2" placeholder="" name="max-tweets">
+      <input id="user-account-2" type="user-account-2" class="form-control" placeholder="" name="max-tweets">
     </div>
     <div class="form-group">
       <label for="user-account-3">User Account 3:</label>
-      <input type="user-account-3" class="form-control" id="user-account-3" placeholder="" name="max-tweets">
+      <input id="user-account-3" type="user-account-3" class="form-control" placeholder="" name="max-tweets">
     </div>
     <button id="updateSettingsBtn" class="btn btn-default">Submit</button>
   </form>
@@ -63,9 +63,24 @@
     });
 
     function populateForm() {
+        // Get values from localStorage
         let maxTweets = localStorage.getItem('maxTweets') || "30";
-        let userAccountNameA = localStorage.getItem('userAccountNameA');
+        let tweetMode = localStorage.getItem('tweetMode') || "extended";
+        let userAccountNameA = localStorage.getItem('userAccountNameA') || "appdirect";
+        let userAccountNameB = localStorage.getItem('userAccountNameB') || "laughingsquid";
+        let userAccountNameC = localStorage.getItem('userAccountNameC') || "techcrunch";
+
         $("#max-tweets").val(maxTweets);
+        if(tweetMode == "extended") {
+            $('#tweet-mode-extended').prop('checked', true);
+        } else {
+            $('#tweet-mode-brief').prop('checked', true);
+        }
+        $("#tweet-mode").val(tweetMode);
+        
+        $("#user-account-1").val(userAccountNameA);
+        $("#user-account-2").val(userAccountNameB);
+        $("#user-account-3").val(userAccountNameC);
     }
 
     function updateSetting(){

@@ -20,35 +20,35 @@ let client = new Twitter({
 
 let params = {
     //since: 2017-11-30,
-    screen_name: "",          // localStorage = userAccountAName, userAccountBName, userAccountCName     
+    screen_name: "",          // localStorage = userAccountNameA, userAccountNameB, userAccountNameC     
     count: 0,                 // localStorage = maxTweets
     tweet_mode: "extended"    // Use "extended" to avoid truncation
 };
-let userAccountAName = "";      // localStorage = userAccountAName
-let userAccountBName = "";      // localStorage = userAccountBName
-let userAccountCName = "";      // localStorage = userAccountCName
+let userAccountNameA = "";      // localStorage = userAccountNameA
+let userAccountNameB = "";      // localStorage = userAccountNameB
+let userAccountNameC = "";      // localStorage = userAccountNameC
 
-let userAccountATweets = [];
-let userAccountBTweets = [];
-let userAccountCTweets = [];
+let userAccountTweetsA = [];
+let userAccountTweetsB = [];
+let userAccountTweetsC = [];
 
-let getUserAccountATweets = async function(callback){
-  userAccountATweets = [];
-  params.screen_name = userAccountAName;
+let getUserAccountTweetsA = async function(callback){
+  userAccountTweetsA = [];
+  params.screen_name = userAccountNameA;
   client.get('statuses/user_timeline', params, gotData );
-  callback(null, userAccountATweets);
+  callback(null, userAccountTweetsA);
 }
-let getUserAccountBTweets = async function(callback){
-  userAccountBTweets = [];
-  params.screen_name = userAccountBName;
+let getUserAccountTweetsB = async function(callback){
+  userAccountTweetsB = [];
+  params.screen_name = userAccountNameB;
   client.get('statuses/user_timeline', params, gotData );
-  callback(null, userAccountBTweets);
+  callback(null, userAccountTweetsB);
 }
-let getUserAccountCTweets = async function(callback){
-  userAccountCTweets = [];
-  params.screen_name = userAccountCName;
+let getUserAccountTweetsC = async function(callback){
+  userAccountTweetsC = [];
+  params.screen_name = userAccountNameC;
   client.get('statuses/user_timeline', params, gotData );
-  callback(null, userAccountCTweets);
+  callback(null, userAccountTweetsC);
 }
 
 function gotData(error, data, response) {
@@ -99,15 +99,15 @@ function gotData(error, data, response) {
         } else {
           // Account for mixed case matching
           let tScreenName = tweet.user.screen_name;
-          let uScreenNameA = userAccountAName;
-          let uScreenNameB = userAccountBName;
-          let uScreenNameC = userAccountCName;
+          let uScreenNameA = userAccountNameA;
+          let uScreenNameB = userAccountNameB;
+          let uScreenNameC = userAccountNameC;
           if (tScreenName.toLowerCase() == uScreenNameA.toLowerCase()) {  
-            userAccountATweets.push(tweetObj);
+            userAccountTweetsA.push(tweetObj);
           } else if (tScreenName.toLowerCase() == uScreenNameB.toLowerCase()) {  
-            userAccountBTweets.push(tweetObj);
+            userAccountTweetsB.push(tweetObj);
           } else if (tScreenName.toLowerCase() == uScreenNameC.toLowerCase()) {  
-            userAccountCTweets.push(tweetObj);
+            userAccountTweetsC.push(tweetObj);
           }
         }
     }
@@ -135,15 +135,15 @@ function addSummaryData(url, twitterObj){
 
     // Account for mixed case matching
     let tObjScreenName = twitterObj.screenName;
-    let uScreenNameA = userAccountAName;
-    let uScreenNameB = userAccountBName;
-    let uScreenNameC = userAccountCName;    
+    let uScreenNameA = userAccountNameA;
+    let uScreenNameB = userAccountNameB;
+    let uScreenNameC = userAccountNameC;    
     if (tObjScreenName.toLowerCase() == uScreenNameA.toLowerCase()) {
-      userAccountATweets.push(twitterObj);    
+      userAccountTweetsA.push(twitterObj);    
     } else if (tObjScreenName.toLowerCase() == uScreenNameB.toLowerCase()) {
-      userAccountBTweets.push(twitterObj);    
+      userAccountTweetsB.push(twitterObj);    
     } else if (tObjScreenName.toLowerCase() == uScreenNameC.toLowerCase()) {
-      userAccountCTweets.push(twitterObj);    
+      userAccountTweetsC.push(twitterObj);    
     }
   });
   return;
@@ -173,33 +173,33 @@ router.get('/', async function(req, res, next) {
   // Create customizable settings variables with defaults
   params.count      = localStorage.getItem('maxTweets') || 30;
   params.tweet_mode = localStorage.getItem('tweetMode') || "extended";
-  userAccountAName  = localStorage.getItem('userAccountAName') || "appdirect";
-  userAccountBName  = localStorage.getItem('userAccountBName') || "laughingsquid";
-  userAccountCName  = localStorage.getItem('userAccountCName') || "techcrunch";
+  userAccountNameA  = localStorage.getItem('userAccountNameA') || "appdirect";
+  userAccountNameB  = localStorage.getItem('userAccountNameB') || "laughingsquid";
+  userAccountNameC  = localStorage.getItem('userAccountNameC') || "techcrunch";
   
   let functionStack = [];
-  functionStack.push(getUserAccountATweets);
-  functionStack.push(getUserAccountBTweets);
-  functionStack.push(getUserAccountCTweets);
+  functionStack.push(getUserAccountTweetsA);
+  functionStack.push(getUserAccountTweetsB);
+  functionStack.push(getUserAccountTweetsC);
 
   async.parallel(functionStack, function(err, result){
     setTimeout(function(){
       // Sort tweets by date
-      userAccountATweets.sort(function(a,b){
+      userAccountTweetsA.sort(function(a,b){
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
-      userAccountBTweets.sort(function(a,b){
+      userAccountTweetsB.sort(function(a,b){
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
-      userAccountCTweets.sort(function(a,b){
+      userAccountTweetsC.sort(function(a,b){
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
 
       res.render('tweets', {
         title: "Todd's Twitter App",
-        userAccountATweets:   userAccountATweets,
-        userAccountBTweets:   userAccountBTweets,
-        userAccountCTweets:   userAccountCTweets
+        userAccountTweetsA:   userAccountTweetsA,
+        userAccountTweetsB:   userAccountTweetsB,
+        userAccountTweetsC:   userAccountTweetsC
       });
     }, 5000);
   });

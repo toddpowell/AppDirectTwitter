@@ -36,6 +36,6 @@ There are a few things I would change/update if I had more time:
 - Add tweet mode to settings ("extended" prevents text truncation, but can create some long tweet cards.)
 
 Known issues/bugs
-- I used async/wait on my REST calls. This helped my app to wait for all tweets before sorting them. However, I'm still experiencing a synch issue, so I added delay to res.response in tweets.js. Otherwise, some of the tweets do not get returned. One workaround might be to add a "loading" page/message/modal. Another way is to keep a count of the number of tweets processed. When processed = expected, call a callback function that renders the page. I would do this if I had more time, but my wife is starting to look at me funny for taking time away from her and our baby. :D
+- I used async/wait on my REST calls. This helped my app to wait for all tweets before sorting them. However, I'm still experiencing a synch issue, so I added delay to res.response in tweets.js. Otherwise, some of the tweets do not get returned. One workaround might be to add a "loading" page/message/modal. Another way is to keep a count of the number of tweets processed. When processed = expected, call a callback function that renders the page. I would do this, but I'm out of time.
 - I am unable to get the images for the tweet summaries. I could not find their links in either the tweet data or the target page's meta data. My best guess is that Twitter is doing some magic behind the scenes that I cannot replicate.
 

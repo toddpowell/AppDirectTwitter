@@ -64,3 +64,10 @@ latest.js:17
 latest.js:18
 
 
+function codeThatMightChangeFlag(callback) {
+    // do a bunch of stuff
+    if (condition happens to change flag value) {
+        // call the callback to notify other code
+        callback();
+    }
+}

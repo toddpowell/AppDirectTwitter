@@ -3,6 +3,8 @@ let router = express.Router();
 let request = require('request');
 let async = require('async');
 let cheerio = require('cheerio');
+var LocalStorage = require('node-localstorage').LocalStorage,
+localStorage = new LocalStorage('./scratch');
 
 ///////////////////
 // Twitter stuff //
@@ -15,11 +17,12 @@ let client = new Twitter({
     access_token_key: '935315246016708608-h35nv8ckMjPy5ZYbLf2W4vCTUVQSaY1',
     access_token_secret: 'e92KsqJYtHR6BbgxfQ1CqDkVaXF5OGW953o7duQlLT2Oq'
   });
-  
+
 let params = {
-    screen_name: '', 
-    count: 30, 
-    tweet_mode: "extended"      // Use this to avoid truncation
+    //since: 2017-11-30,
+    screen_name: '',          
+    count: 0,                 // localStorage = maxTweets
+    tweet_mode: "extended"    // Use this to avoid truncation
 };
 
 let appDirectTweets = [];
@@ -160,6 +163,13 @@ function linkify(plainText) {
 // Router stuff //
 //////////////////
 router.get('/', async function(req, res, next) {
+  // Create customizable settings variables with defaults
+  params.count = localStorage.getItem('maxTweets') || 30;
+  console.log("maxTweets: " + params.count);
+   
+  // localStorage.setItem('myFirstKey', 'myFirstValue');
+  //console.log(localStorage.getItem('myFirstKey'));
+
   let functionStack = [];
   functionStack.push(getAppDirect);
   functionStack.push(getLaughingSquid);

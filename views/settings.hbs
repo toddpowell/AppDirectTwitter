@@ -23,5 +23,53 @@
     </div>
 </nav>
 
-<h1>Settings for {{title}}</h1>
+<div id="page-title"><h1>Settings for {{title}}</h1></div>
 
+<div id="settings-container" class="container">
+  <form action="">
+    <div class="form-group">
+      <label for="max-tweets">Maximum Tweets:</label>
+      <input id="max-tweets" type="max-tweets" class="form-control" placeholder="" name="max-tweets">
+    </div>
+    <label>Tweet Mode:</label>
+    <div class="radio">
+        <label><input type="radio" name="optradio">Brief</label></div>
+    <div class="radio">
+        <label><input type="radio" name="optradio">Verbose</label></div>
+    <div class="form-group">
+      <label for="user-account-1">User Account 1:</label>
+      <input type="user-account-1" class="form-control" id="user-account-1" placeholder="" name="max-tweets">
+    </div>
+    <div class="form-group">
+      <label for="user-account-2">User Account 2:</label>
+      <input type="user-account-2" class="form-control" id="user-account-2" placeholder="" name="max-tweets">
+    </div>
+    <div class="form-group">
+      <label for="user-account-3">User Account 3:</label>
+      <input type="user-account-3" class="form-control" id="user-account-3" placeholder="" name="max-tweets">
+    </div>
+    <button id="updateSettingsBtn" class="btn btn-default">Submit</button>
+  </form>
+</div>
+
+<script>
+    
+    $(document).ready(function(){
+        $("#updateSettingsBtn").click(function(){
+            updateSetting();
+        });
+
+        populateForm();
+    });
+
+    function populateForm() {
+        let maxTweets = localStorage.getItem('maxTweets') || "30";
+        let userAccountNameA = localStorage.getItem('userAccountNameA');
+        $("#max-tweets").val(maxTweets);
+    }
+
+    function updateSetting(){
+        alert("updateSettings()");
+    }
+
+</script>

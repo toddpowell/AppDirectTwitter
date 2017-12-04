@@ -196,7 +196,7 @@ router.get('/', async function(req, res, next) {
       });
 
       res.render('tweets', {
-        title: "My Twitter App",
+        title: "Todd's Twitter App",
         userAccountATweets:   userAccountATweets,
         userAccountBTweets:   userAccountBTweets,
         userAccountCTweets:   userAccountCTweets

@@ -3,7 +3,7 @@ var router = express.Router();
 
 router.get('/', function(req, res, next) {
   res.render('about', {
-    title: "AppDirect Twitter"
+    title: "Todd's Twitter App"
   });
 });
 

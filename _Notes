@@ -35,3 +35,32 @@ profile_background_image_url_https:"https://pbs.twimg.com/profile_background_ima
 profile_banner_url:"https://pbs.twimg.com/profile_banners/154310289/1504623002"
 profile_image_url:"http://pbs.twimg.com/profile_images/890252563190226944/lP9wOBFy_normal.jpg"
 profile_image_url_https:"https://pbs.twimg.com/profile_images/890252563190226944/lP9wOBFy_normal.jpg"        
+
+
+Output from ssl-root-cas:
+Needs latest SSL Root Certificate Authority data c:\Development\AppDirectTwitter\AppDirectTwitter\node_modules\ssl-root-cas\ssl-root-cas-latest.js
+latest.js:9
+Loading latest certificates from https://mxr.mozilla.org/nss/source/lib/ckfw/builtins/certdata.txt?raw=1
+ca-store-generator.js:181
+Skipped 2 untrusted certificates.
+ca-store-generator.js:123
+Processed 155 certificates.
+ca-store-generator.js:124
+Wrote 155 certificates in 'c:\Development\AppDirectTwitter\AppDirectTwitter\node_modules\ssl-root-cas\pems\'.
+ca-store-generator.js:146
+Wrote 'c:\Development\AppDirectTwitter\AppDirectTwitter\node_modules\ssl-root-cas\ssl-root-cas-latest.js'.
+ca-store-generator.js:155
+latest.js:12
+##########################################################################################
+latest.js:13
+#                                                                                        #
+latest.js:14
+#  Downloaded the latest Root Certificate Authorities. Restart your server to use them.  #
+latest.js:15
+#                                                                                        #
+latest.js:16
+##########################################################################################
+latest.js:17
+latest.js:18
+
+

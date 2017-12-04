@@ -5,6 +5,13 @@ let async = require('async');
 let cheerio = require('cheerio');
 var LocalStorage = require('node-localstorage').LocalStorage,
 localStorage = new LocalStorage('./scratch');
+'use strict';
+var rootCas = require('ssl-root-cas/latest').create();
+var injected = require('ssl-root-cas').inject();
+ 
+// default for all https requests
+// (whether using https directly, request, or another module)
+require('https').globalAgent.options.ca = rootCas;
 
 ///////////////////
 // Twitter stuff //
@@ -53,14 +60,7 @@ let getUserAccountTweetsC = async function(callback){
 
 function gotData(error, data, response) {
   if (!error) {
-    for (tweet of data) {
-
-        // Retweets
-        let retweeted = false;
-        if (tweet.retweeted_status) {
-          retweeted = true;
-        } 
-              
+    for (tweet of data) {              
         var summaryUrl = null;
         if (tweet.entities.urls[0]) {
           summaryUrl = tweet.entities.urls[0].url;
@@ -76,14 +76,32 @@ function gotData(error, data, response) {
         let tweetText = tweet.text || tweet.full_text;
         let linkedText = linkify(tweetText);
 
+        // Retweets
+        let retweeted = false;
+        let userName = null;
+        let screenName = null; 
+        let profileImageUrl = null;        
+        if (tweet.retweeted_status) {
+          retweeted         = true;
+          userName          = tweet.retweeted_status.user.name;
+          screenName        = tweet.retweeted_status.user.screen_name;
+          profileImageUrl   = tweet.retweeted_status.user.profile_image_url;
+        } else {
+          retweeted       = false;
+          userName        = tweet.user.name;
+          screenName      = tweet.user.screen_name;
+          profileImageUrl = tweet.user.profile_image_url; 
+        }
+
         let tweetObj = {
           id:                 tweet.id_str,
           retweeted:          retweeted,
-          userName:           tweet.user.name,
-          screenName:         tweet.user.screen_name,
+          userName:           userName, //tweet.user.name,
+          screenName:         screenName, //tweet.user.screen_name,
+          authorName:         tweet.user.name,
           createdAt:          formattedDate,   
-          tweetText:           linkedText,
-          profileImageUrl: tweet.user.profile_image_url,
+          tweetText:          linkedText,
+          profileImageUrl:    profileImageUrl,  //tweet.user.profile_image_url,
           summaryUrl:         summaryUrl,   // same as summary-site?
           summaryCard:        null,         // what's this for?
           summarySite:        null,
@@ -93,7 +111,7 @@ function gotData(error, data, response) {
 
         // Summary card
         var summaryData;
-        if (summaryUrl) {
+        if ((summaryUrl)&&(!retweeted)) {   // Craps out when summarizing retweets - unable to verify the first certificate
           // Scrape site for Twitter meta data - This is what Twitter does to build their summary cards
           addSummaryData(tweet.entities.urls[0].url, tweetObj);
         } else {

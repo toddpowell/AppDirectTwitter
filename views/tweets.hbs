@@ -33,11 +33,11 @@
         {{#each userAccountTweetsA}}
             <blockquote class="twitter-tweet Tweet h-entry js-tweetIdInfo subject expanded is-deciderHtmlWhitespace" cite="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-tweet-id="{{this.id}}" data-scribe="section:subject">
                 {{#if retweeted}}
-                    <p class="retweet-indicator">{{this.screenName}} retweeted</p>
+                    <p class="retweet-indicator">{{this.authorName}} retweeted</p>
                 {{/if}}
                 <div class="Tweet-header u-cf">
                     <div class="Tweet-brand u-floatRight">
-                        <a href="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-scribe="element:logo" target="_blank">
+                        <a href="https://twitter.com/{{this.authorName}}/status/{{this.id}}" data-scribe="element:logo" target="_blank">
                             <span class="FollowButton-bird">
                                 <div class="fa fa-twitter" aria-label="View on Twitter" title="View on Twitter" role="presentation">
                                 Follow</div>

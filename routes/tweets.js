@@ -54,7 +54,6 @@ let getUserAccountCTweets = async function(callback){
 function gotData(error, data, response) {
   if (!error) {
     for (tweet of data) {
-        //console.log('----------------------');
 
         let retweeted = false;
         // Retweets
@@ -178,18 +177,12 @@ router.get('/', async function(req, res, next) {
   userAccountBName  = localStorage.getItem('userAccountBName') || "laughingsquid";
   userAccountCName  = localStorage.getItem('userAccountCName') || "techcrunch";
   
-  console.log("userAccountBName: " + userAccountBName);
-   
-  // localStorage.setItem('myFirstKey', 'myFirstValue');
-  //console.log(localStorage.getItem('myFirstKey'));
-
   let functionStack = [];
   functionStack.push(getUserAccountATweets);
   functionStack.push(getUserAccountBTweets);
   functionStack.push(getUserAccountCTweets);
 
   async.parallel(functionStack, function(err, result){
-    console.log(result);
     setTimeout(function(){
       // Sort tweets by date
       userAccountATweets.sort(function(a,b){

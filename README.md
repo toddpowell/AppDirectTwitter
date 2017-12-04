@@ -1,6 +1,14 @@
 # AppDirectTwitter
 A simple web application using Twitter's REST API
 
+Install:
+> npm install
+
+Run:
+> npm start
+
+Overview:
+
 When I was designing this app, I realized there were three different approaches I could've taken.
 1) Use embedded Twitter timelines
 2) Use the twttr.widget library

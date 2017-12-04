@@ -29,8 +29,8 @@ let userAccountB = ""      // localStorage = userAccountB
 let userAccountC = ""      // localStorage = userAccountC
 
 let userAccountATweets = [];
-let laughingSquidTweets = [];
-let techCrunchTweets = [];
+let userAccountBTweets = [];
+let userAccountCTweets = [];
 
 let getUserAccountATweets = async function(callback){
   userAccountATweets = [];
@@ -38,17 +38,17 @@ let getUserAccountATweets = async function(callback){
   client.get('statuses/user_timeline', params, gotData );
   callback(null, userAccountATweets);
 }
-let getLaughingSquid = async function(callback){
-  laughingSquidTweets = [];
+let getUserAccountBTweets = async function(callback){
+  userAccountBTweets = [];
   params.screen_name = "laughingsquid";
   client.get('statuses/user_timeline', params, gotData );
-  callback(null, laughingSquidTweets);
+  callback(null, userAccountBTweets);
 }
-let getTechCrunch = async function(callback){
-  techCrunchTweets = [];
+let getUserAccountCTweets = async function(callback){
+  userAccountCTweets = [];
   params.screen_name = "techcrunch";
   client.get('statuses/user_timeline', params, gotData );
-  callback(null, techCrunchTweets);
+  callback(null, userAccountCTweets);
 }
 
 function gotData(error, data, response) {
@@ -104,15 +104,15 @@ function gotData(error, data, response) {
           if (tweet.user.screen_name == "AppDirect") {  
             userAccountATweets.push(tweetObj);
           } else if (tweet.user.screen_name == "LaughingSquid") {  
-            laughingSquidTweets.push(tweetObj);
+            userAccountBTweets.push(tweetObj);
           } else if (tweet.user.screen_name == "TechCrunch") {  
-            techCrunchTweets.push(tweetObj);
+            userAccountCTweets.push(tweetObj);
           }
         }
     }
     console.log("userAccountATweets: " + userAccountATweets.length);
-    console.log("laughingSquidTweets: " + laughingSquidTweets.length);
-    console.log("techCrunchTweets: " + techCrunchTweets.length);
+    console.log("userAccountBTweets: " + userAccountBTweets.length);
+    console.log("userAccountCTweets: " + userAccountCTweets.length);
   } 
 }
 
@@ -138,9 +138,9 @@ function addSummaryData(url, twitterObj){
     if (twitterObj.screenName == "AppDirect") {
       userAccountATweets.push(twitterObj);    
     } else if (twitterObj.screenName == "LaughingSquid") {
-      laughingSquidTweets.push(twitterObj);    
+      userAccountBTweets.push(twitterObj);    
     } else if (twitterObj.screenName == "TechCrunch") {
-      techCrunchTweets.push(twitterObj);    
+      userAccountCTweets.push(twitterObj);    
     }
   });
   return;
@@ -181,8 +181,8 @@ router.get('/', async function(req, res, next) {
 
   let functionStack = [];
   functionStack.push(getUserAccountATweets);
-  functionStack.push(getLaughingSquid);
-  functionStack.push(getTechCrunch);
+  functionStack.push(getUserAccountBTweets);
+  functionStack.push(getUserAccountCTweets);
 
   async.parallel(functionStack, function(err, result){
     console.log(result);
@@ -191,18 +191,18 @@ router.get('/', async function(req, res, next) {
       userAccountATweets.sort(function(a,b){
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
-      laughingSquidTweets.sort(function(a,b){
+      userAccountBTweets.sort(function(a,b){
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
-      techCrunchTweets.sort(function(a,b){
+      userAccountCTweets.sort(function(a,b){
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
 
       res.render('tweets', {
         title: "AppDirect Twitter",
         userAccountATweets:   userAccountATweets,
-        laughingSquidTweets:  laughingSquidTweets,
-        techCrunchTweets:     techCrunchTweets
+        userAccountBTweets:   userAccountBTweets,
+        userAccountCTweets:   userAccountCTweets
       });
       console.log("rendered page");
     }, 5000);

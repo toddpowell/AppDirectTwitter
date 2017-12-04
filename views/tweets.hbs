@@ -111,8 +111,8 @@
         {{/each}}
     </div>
     <div class="col-sm-4 timeline-column">
-        <div class="account-title">Tweets by @LaughingSquid</div>
-        {{#each laughingSquidTweets}}
+        <div class="account-title">Tweets by @{{userAccountBTweets.0.screenName}}</div>
+        {{#each userAccountBTweets}}
             <blockquote class="twitter-tweet Tweet h-entry js-tweetIdInfo subject expanded is-deciderHtmlWhitespace" cite="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-tweet-id="{{this.id}}" data-scribe="section:subject">
                 {{#if retweeted}}
                     <p class="retweet-indicator">{{this.screenName}} retweeted</p>
@@ -194,8 +194,8 @@
         {{/each}}
     </div>
     <div class="col-sm-4 timeline-column">
-        <div class="account-title">Tweets by @TechCrunch</div>
-        {{#each techCrunchTweets}}
+        <div class="account-title">Tweets by @{{userAccountCTweets.0.screenName}}</div>
+        {{#each userAccountCTweets}}
             <blockquote class="twitter-tweet Tweet h-entry js-tweetIdInfo subject expanded is-deciderHtmlWhitespace" cite="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-tweet-id="{{this.id}}" data-scribe="section:subject">
                 {{#if retweeted}}
                     <p class="retweet-indicator">{{this.screenName}} retweeted</p>

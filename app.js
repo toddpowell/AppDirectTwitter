@@ -15,6 +15,15 @@ var embed = require('./routes/embed');
 var LocalStorage = require('node-localstorage').LocalStorage,
 localStorage = new LocalStorage('./scratch');
 
+// Set defaults
+if (!localStorage.getItem('maxTweets')) { localStorage.setItem("maxTweets", 30); }
+if (!localStorage.getItem('userAccountNameA')) 
+   { localStorage.setItem("userAccountNameA", "appdirect"); }
+if (!localStorage.getItem('userAccountNameB')) 
+   { localStorage.setItem("userAccountNameB", "laughingsquid"); }
+if (!localStorage.getItem('userAccountNameC')) 
+   { localStorage.setItem("userAccountNameC", "techcrunch"); }
+
 var app = express();
 
 // view engine setup

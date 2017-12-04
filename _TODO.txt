@@ -56,3 +56,6 @@ getInfo();
           summaryDescription: null          // same as full-text?
         }
 
+- Add tweet mode to settings
+- Refactor tweet HTML into a partial
+- Fix timeout hack

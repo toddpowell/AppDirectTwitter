@@ -15,6 +15,7 @@ a {
   text-align: center;
 }
 
+/* Tweets page */
 .retweet-indicator {
   font-size: 14px;
   margin: 10px 0px 0px;  
@@ -130,4 +131,8 @@ blockquote.tcu-imageWrapper {
   color: black;
   background-color: #fff;
   border-color: rgba(15, 14, 14, 0.466);
+}
+
+#btnUserMessageOK {
+  text-align: center;
 }

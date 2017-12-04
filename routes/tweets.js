@@ -22,7 +22,7 @@ let params = {
     //since: 2017-11-30,
     screen_name: "",          // localStorage = userAccountNameA, userAccountNameB, userAccountNameC     
     count: 0,                 // localStorage = maxTweets
-    tweet_mode: "extended"    // Use "extended" to avoid truncation
+    tweet_mode: "extended"    // Use "extended" to avoid truncation. Can add to settings later
 };
 let userAccountNameA = "";      // localStorage = userAccountNameA
 let userAccountNameB = "";      // localStorage = userAccountNameB
@@ -55,8 +55,8 @@ function gotData(error, data, response) {
   if (!error) {
     for (tweet of data) {
 
-        let retweeted = false;
         // Retweets
+        let retweeted = false;
         if (tweet.retweeted_status) {
           retweeted = true;
         } 
@@ -121,7 +121,7 @@ function addSummaryData(url, twitterObj){
     }
     var $ = cheerio.load(body);
 
-    // do stuff with the `$` content here
+    // Parse data
     $card = $('meta[name="twitter:card"]').attr('content'),
     $site = $('meta[name="twitter:site"]').attr('content'),
     $title = $('meta[name="twitter:title"]').attr('content'),
@@ -201,7 +201,7 @@ router.get('/', async function(req, res, next) {
         userAccountTweetsB:   userAccountTweetsB,
         userAccountTweetsC:   userAccountTweetsC
       });
-    }, 5000);
+    }, 5000); // Timer to make sure everything loads, even after using async/await. Sorry for the hack. I'm sure there's a better solution.
   });
 });
 

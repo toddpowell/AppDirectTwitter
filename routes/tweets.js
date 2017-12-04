@@ -22,8 +22,11 @@ let params = {
     //since: 2017-11-30,
     screen_name: '',          
     count: 0,                 // localStorage = maxTweets
-    tweet_mode: "extended"    // Use this to avoid truncation
+    tweet_mode: "extended"    // Use "extended" to avoid truncation
 };
+let userAccountA = ""      // localStorage = userAccountA
+let userAccountB = ""      // localStorage = userAccountB
+let userAccountC = ""      // localStorage = userAccountC
 
 let appDirectTweets = [];
 let laughingSquidTweets = [];
@@ -74,8 +77,8 @@ function gotData(error, data, response) {
 
         // Replace text links with anchor tags
         // replace(/(\w+\.\w+)/g, "<a href='$1' target='_blank'>$1</a>");
-        let fullText = tweet.full_text;
-        let linkedText = linkify(fullText);
+        let tweetText = tweet.text || tweet.full_text;
+        let linkedText = linkify(tweetText);
 
         let tweetObj = {
           id:                 tweet.id_str,
@@ -83,7 +86,7 @@ function gotData(error, data, response) {
           userName:           tweet.user.name,
           screenName:         tweet.user.screen_name,
           createdAt:          formattedDate,   
-          fullText:           linkedText,
+          tweetText:           linkedText,
           profileImageUrl: tweet.user.profile_image_url,
           summaryUrl:         summaryUrl,   // same as summary-site?
           summaryCard:        null,         // what's this for?
@@ -140,6 +143,7 @@ function addSummaryData(url, twitterObj){
       techCrunchTweets.push(twitterObj);    
     }
   });
+  return;
 }
 
 // Replace plain text links with anchor tags
@@ -165,6 +169,11 @@ function linkify(plainText) {
 router.get('/', async function(req, res, next) {
   // Create customizable settings variables with defaults
   params.count = localStorage.getItem('maxTweets') || 30;
+  params.tweet_mode = localStorage.getItem('tweetMode') || "extended";
+  userAccountA = localStorage.getItem('userAccountA') || "extended";
+  userAccountB = localStorage.getItem('userAccountB') || "extended";
+  userAccountC = localStorage.getItem('userAccountC') || "extended";
+  
   console.log("maxTweets: " + params.count);
    
   // localStorage.setItem('myFirstKey', 'myFirstValue');

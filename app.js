@@ -38,7 +38,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', home);
+//app.use('/', home);
+app.use('/', tweets);
 app.use('/tweets', tweets);
 app.use('/settings', settings);
 app.use('/about', about);

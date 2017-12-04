@@ -31,6 +31,9 @@
         <div class="account-title">Tweets by @AppDirect</div>
         {{#each appDirectTweets}}
             <blockquote class="twitter-tweet Tweet h-entry js-tweetIdInfo subject expanded is-deciderHtmlWhitespace" cite="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-tweet-id="{{this.id}}" data-scribe="section:subject">
+                {{#if retweeted}}
+                    <p class="retweet-indicator">{{this.screenName}} retweeted</p>
+                {{/if}}
                 <div class="Tweet-header u-cf">
                     <div class="Tweet-brand u-floatRight">
                         <a href="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-scribe="element:logo" target="_blank">
@@ -111,6 +114,9 @@
         <div class="account-title">Tweets by @LaughingSquid</div>
         {{#each laughingSquidTweets}}
             <blockquote class="twitter-tweet Tweet h-entry js-tweetIdInfo subject expanded is-deciderHtmlWhitespace" cite="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-tweet-id="{{this.id}}" data-scribe="section:subject">
+                {{#if retweeted}}
+                    <p class="retweet-indicator">{{this.screenName}} retweeted</p>
+                {{/if}}            
                 <div class="Tweet-header u-cf">
                     <div class="Tweet-brand u-floatRight">
                         <a href="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-scribe="element:logo" target="_blank">
@@ -191,6 +197,9 @@
         <div class="account-title">Tweets by @TechCrunch</div>
         {{#each techCrunchTweets}}
             <blockquote class="twitter-tweet Tweet h-entry js-tweetIdInfo subject expanded is-deciderHtmlWhitespace" cite="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-tweet-id="{{this.id}}" data-scribe="section:subject">
+                {{#if retweeted}}
+                    <p class="retweet-indicator">{{this.screenName}} retweeted</p>
+                {{/if}}            
                 <div class="Tweet-header u-cf">
                     <div class="Tweet-brand u-floatRight">
                         <a href="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-scribe="element:logo" target="_blank">

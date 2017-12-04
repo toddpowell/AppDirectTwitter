@@ -15,6 +15,11 @@ a {
   text-align: center;
 }
 
+.retweet-indicator {
+  font-size: 14px;
+  margin: 10px 0px 0px;  
+}
+
 .EmbeddedTweet-tweet {
   border: 1px grey solid;
   max-width: 458px;

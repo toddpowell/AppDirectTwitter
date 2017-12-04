@@ -53,12 +53,11 @@ function gotData(error, data, response) {
     for (tweet of data) {
         //console.log('----------------------');
 
+        let retweeted = false;
         // Retweets
         if (tweet.retweeted_status) {
-          // true
-        } else {
-          //false
-        }
+          retweeted = true;
+        } 
               
         var summaryUrl = null;
         if (tweet.entities.urls[0]) {
@@ -77,6 +76,7 @@ function gotData(error, data, response) {
 
         let tweetObj = {
           id:                 tweet.id_str,
+          retweeted:          retweeted,
           userName:           tweet.user.name,
           screenName:         tweet.user.screen_name,
           createdAt:          formattedDate,   

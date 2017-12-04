@@ -5,13 +5,6 @@ let async = require('async');
 let cheerio = require('cheerio');
 var LocalStorage = require('node-localstorage').LocalStorage,
 localStorage = new LocalStorage('./scratch');
-'use strict';
-var rootCas = require('ssl-root-cas/latest').create();
-var injected = require('ssl-root-cas').inject();
- 
-// default for all https requests
-// (whether using https directly, request, or another module)
-require('https').globalAgent.options.ca = rootCas;
 
 ///////////////////
 // Twitter stuff //
@@ -214,7 +207,7 @@ router.get('/', async function(req, res, next) {
       });
 
       res.render('tweets', {
-        title: "Todd's Twitter App",
+        title: "Todd Powell's Twitter App",
         userAccountTweetsA:   userAccountTweetsA,
         userAccountTweetsB:   userAccountTweetsB,
         userAccountTweetsC:   userAccountTweetsC

@@ -5,7 +5,7 @@ localStorage = new LocalStorage('./scratch');
 
 router.get('/', function(req, res, next) {
   res.render('settings', {
-    title: "Todd's Twitter App",
+    title: "Todd Powell's Twitter App",
     maxTweets: localStorage.getItem('maxTweets'),
     userName1: localStorage.getItem('userAccountNameA'),
     userName2: localStorage.getItem('userAccountNameB'),

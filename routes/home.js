@@ -3,7 +3,7 @@ var router = express.Router();
 
 router.get('/', function(req, res, next) {
   res.render('home', {
-    title: "Todd's Twitter App"
+    title: "Todd Powell's Twitter App"
   });
 });
 

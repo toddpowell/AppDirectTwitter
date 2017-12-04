@@ -20,13 +20,13 @@ let client = new Twitter({
 
 let params = {
     //since: 2017-11-30,
-    screen_name: '',          
+    screen_name: "",          // localStorage = userAccountAName, userAccountBName, userAccountCName     
     count: 0,                 // localStorage = maxTweets
     tweet_mode: "extended"    // Use "extended" to avoid truncation
 };
-let userAccountA = ""      // localStorage = userAccountA
-let userAccountB = ""      // localStorage = userAccountB
-let userAccountC = ""      // localStorage = userAccountC
+let userAccountAName = "";      // localStorage = userAccountAName
+let userAccountBName = "";      // localStorage = userAccountBName
+let userAccountCName = "";      // localStorage = userAccountCName
 
 let userAccountATweets = [];
 let userAccountBTweets = [];
@@ -34,28 +34,25 @@ let userAccountCTweets = [];
 
 let getUserAccountATweets = async function(callback){
   userAccountATweets = [];
-  params.screen_name = "appdirect";
+  params.screen_name = userAccountAName;
   client.get('statuses/user_timeline', params, gotData );
   callback(null, userAccountATweets);
 }
 let getUserAccountBTweets = async function(callback){
   userAccountBTweets = [];
-  params.screen_name = "laughingsquid";
+  params.screen_name = userAccountBName;
   client.get('statuses/user_timeline', params, gotData );
   callback(null, userAccountBTweets);
 }
 let getUserAccountCTweets = async function(callback){
   userAccountCTweets = [];
-  params.screen_name = "techcrunch";
+  params.screen_name = userAccountCName;
   client.get('statuses/user_timeline', params, gotData );
   callback(null, userAccountCTweets);
 }
 
 function gotData(error, data, response) {
   if (!error) {
-    //console.log(data);
-    console.log("# of tweets: " + data.length);
-
     for (tweet of data) {
         //console.log('----------------------');
 
@@ -101,18 +98,20 @@ function gotData(error, data, response) {
           // Scrape site for Twitter meta data - This is what Twitter does to build their summary cards
           addSummaryData(tweet.entities.urls[0].url, tweetObj);
         } else {
-          if (tweet.user.screen_name == "AppDirect") {  
+          // Account for mixed case matching
+          let tScreenName = tweet.user.screen_name;
+          let uScreenNameA = userAccountAName;
+          let uScreenNameB = userAccountBName;
+          let uScreenNameC = userAccountCName;
+          if (tScreenName.toLowerCase() == uScreenNameA.toLowerCase()) {  
             userAccountATweets.push(tweetObj);
-          } else if (tweet.user.screen_name == "LaughingSquid") {  
+          } else if (tScreenName.toLowerCase() == uScreenNameB.toLowerCase()) {  
             userAccountBTweets.push(tweetObj);
-          } else if (tweet.user.screen_name == "TechCrunch") {  
+          } else if (tScreenName.toLowerCase() == uScreenNameC.toLowerCase()) {  
             userAccountCTweets.push(tweetObj);
           }
         }
     }
-    console.log("userAccountATweets: " + userAccountATweets.length);
-    console.log("userAccountBTweets: " + userAccountBTweets.length);
-    console.log("userAccountCTweets: " + userAccountCTweets.length);
   } 
 }
 
@@ -135,11 +134,16 @@ function addSummaryData(url, twitterObj){
     twitterObj.summaryTitle = $title;
     twitterObj.summaryDescription = $description;
 
-    if (twitterObj.screenName == "AppDirect") {
+    // Account for mixed case matching
+    let tObjScreenName = twitterObj.screenName;
+    let uScreenNameA = userAccountAName;
+    let uScreenNameB = userAccountBName;
+    let uScreenNameC = userAccountCName;    
+    if (tObjScreenName.toLowerCase() == uScreenNameA.toLowerCase()) {
       userAccountATweets.push(twitterObj);    
-    } else if (twitterObj.screenName == "LaughingSquid") {
+    } else if (tObjScreenName.toLowerCase() == uScreenNameB.toLowerCase()) {
       userAccountBTweets.push(twitterObj);    
-    } else if (twitterObj.screenName == "TechCrunch") {
+    } else if (tObjScreenName.toLowerCase() == uScreenNameC.toLowerCase()) {
       userAccountCTweets.push(twitterObj);    
     }
   });
@@ -168,13 +172,13 @@ function linkify(plainText) {
 //////////////////
 router.get('/', async function(req, res, next) {
   // Create customizable settings variables with defaults
-  params.count = localStorage.getItem('maxTweets') || 30;
+  params.count      = localStorage.getItem('maxTweets') || 30;
   params.tweet_mode = localStorage.getItem('tweetMode') || "extended";
-  userAccountA = localStorage.getItem('userAccountA') || "extended";
-  userAccountB = localStorage.getItem('userAccountB') || "extended";
-  userAccountC = localStorage.getItem('userAccountC') || "extended";
+  userAccountAName  = localStorage.getItem('userAccountAName') || "appdirect";
+  userAccountBName  = localStorage.getItem('userAccountBName') || "laughingsquid";
+  userAccountCName  = localStorage.getItem('userAccountCName') || "techcrunch";
   
-  console.log("maxTweets: " + params.count);
+  console.log("userAccountBName: " + userAccountBName);
    
   // localStorage.setItem('myFirstKey', 'myFirstValue');
   //console.log(localStorage.getItem('myFirstKey'));
@@ -199,12 +203,11 @@ router.get('/', async function(req, res, next) {
       });
 
       res.render('tweets', {
-        title: "AppDirect Twitter",
+        title: "My Twitter App",
         userAccountATweets:   userAccountATweets,
         userAccountBTweets:   userAccountBTweets,
         userAccountCTweets:   userAccountCTweets
       });
-      console.log("rendered page");
     }, 5000);
   });
 });

@@ -28,15 +28,15 @@ let userAccountA = ""      // localStorage = userAccountA
 let userAccountB = ""      // localStorage = userAccountB
 let userAccountC = ""      // localStorage = userAccountC
 
-let appDirectTweets = [];
+let userAccountATweets = [];
 let laughingSquidTweets = [];
 let techCrunchTweets = [];
 
-let getAppDirect = async function(callback){
-  appDirectTweets = [];
+let getUserAccountATweets = async function(callback){
+  userAccountATweets = [];
   params.screen_name = "appdirect";
   client.get('statuses/user_timeline', params, gotData );
-  callback(null, appDirectTweets);
+  callback(null, userAccountATweets);
 }
 let getLaughingSquid = async function(callback){
   laughingSquidTweets = [];
@@ -102,7 +102,7 @@ function gotData(error, data, response) {
           addSummaryData(tweet.entities.urls[0].url, tweetObj);
         } else {
           if (tweet.user.screen_name == "AppDirect") {  
-            appDirectTweets.push(tweetObj);
+            userAccountATweets.push(tweetObj);
           } else if (tweet.user.screen_name == "LaughingSquid") {  
             laughingSquidTweets.push(tweetObj);
           } else if (tweet.user.screen_name == "TechCrunch") {  
@@ -110,7 +110,7 @@ function gotData(error, data, response) {
           }
         }
     }
-    console.log("appDirectTweets: " + appDirectTweets.length);
+    console.log("userAccountATweets: " + userAccountATweets.length);
     console.log("laughingSquidTweets: " + laughingSquidTweets.length);
     console.log("techCrunchTweets: " + techCrunchTweets.length);
   } 
@@ -136,7 +136,7 @@ function addSummaryData(url, twitterObj){
     twitterObj.summaryDescription = $description;
 
     if (twitterObj.screenName == "AppDirect") {
-      appDirectTweets.push(twitterObj);    
+      userAccountATweets.push(twitterObj);    
     } else if (twitterObj.screenName == "LaughingSquid") {
       laughingSquidTweets.push(twitterObj);    
     } else if (twitterObj.screenName == "TechCrunch") {
@@ -180,7 +180,7 @@ router.get('/', async function(req, res, next) {
   //console.log(localStorage.getItem('myFirstKey'));
 
   let functionStack = [];
-  functionStack.push(getAppDirect);
+  functionStack.push(getUserAccountATweets);
   functionStack.push(getLaughingSquid);
   functionStack.push(getTechCrunch);
 
@@ -188,7 +188,7 @@ router.get('/', async function(req, res, next) {
     console.log(result);
     setTimeout(function(){
       // Sort tweets by date
-      appDirectTweets.sort(function(a,b){
+      userAccountATweets.sort(function(a,b){
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
       laughingSquidTweets.sort(function(a,b){
@@ -200,7 +200,7 @@ router.get('/', async function(req, res, next) {
 
       res.render('tweets', {
         title: "AppDirect Twitter",
-        appDirectTweets:      appDirectTweets,
+        userAccountATweets:   userAccountATweets,
         laughingSquidTweets:  laughingSquidTweets,
         techCrunchTweets:     techCrunchTweets
       });

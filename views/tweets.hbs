@@ -28,8 +28,8 @@
 <div id="tweets-container" class="container"> 
   <div class="row">
     <div class="col-sm-4 timeline-column">
-        <div class="account-title">Tweets by @AppDirect</div>
-        {{#each appDirectTweets}}
+        <div class="account-title">Tweets by @{{userAccountATweets.0.screenName}}</div>
+        {{#each userAccountATweets}}
             <blockquote class="twitter-tweet Tweet h-entry js-tweetIdInfo subject expanded is-deciderHtmlWhitespace" cite="https://twitter.com/{{this.screenName}}/status/{{this.id}}" data-tweet-id="{{this.id}}" data-scribe="section:subject">
                 {{#if retweeted}}
                     <p class="retweet-indicator">{{this.screenName}} retweeted</p>

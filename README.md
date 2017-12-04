@@ -16,6 +16,8 @@ Option 3 was by far the most difficult and challenging approach. However, it all
 
 Another advantage of Option 3 is that, since it is custom-built, it is easier to customize  than the out-of-the-box Twitter cards.
 
+This app is optimized for mobile applications. It uses a responsive grid and a responsive navigation bar.
+
 Future enhancements:
 There are a few things I would change/update if I had more time:
 - Refactor the tweets HTML into a partial so I don't repeat as much code, and it's easier to modify.

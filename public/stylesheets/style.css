@@ -136,3 +136,14 @@ blockquote.tcu-imageWrapper {
 #btnUserMessageOK {
   text-align: center;
 }
+
+/* About Page */
+#about-container {
+  text-align: center;
+  margin-top: 40px;
+}
+#about-summary {
+  display: inline-block;
+  max-width: 500px;
+  text-align: left;
+}

@@ -1,6 +1,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
@@ -84,7 +84,11 @@
     }
 
     function updateSetting(){
-        alert("updateSettings()");
+        localStorage.setItem("maxTweets", ("#max-tweets").val());
+        localStorage.setItem("tweetMode", $('form input[type=radio]:checked'));
+        localStorage.setItem("userAccountNameA", $("#user-account-1").val());
+        localStorage.setItem("userAccountNameB", $("#user-account-1").val());
+        localStorage.setItem("userAccountNameC", $("#user-account-1").val());
     }
 
 </script>

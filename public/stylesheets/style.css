@@ -51,7 +51,6 @@ blockquote.twitter-tweet p {
 }
 
 blockquote.twitter-tweet a {
-  color: inherit;
   font-weight: normal;
   text-decoration: none;
   outline: 0 none;
@@ -73,6 +72,13 @@ blockquote .summary-card {
   border-width: 1px;
   padding: 0 16px 16px 16px;
 }
+blockquote .summary-url {
+  color: black;
+}
+blockquote .summary-url:hover{
+  color: black;
+}
+
 blockquote .summary-card a:hover {
   text-decoration: none;
 }
@@ -99,13 +105,23 @@ blockquote.tcu-imageWrapper {
   font-weight: bold;
 }
 
+.Tweet-actions {
+  padding: 0px;
+}
+.Tweet-action{
+  width: 33%;
+  float: left;
+}
+
 /* settings page */
 #settings-container {
   border: 1px solid rgba(15, 14, 14, 0.466);
   max-width: 500px;
   padding: 15px;
 }
-
+#settings-container .form-group {
+  width: 100%;
+}
 #settings-container input {
   border: 1px solid rgba(15, 14, 14, 0.466);
 }

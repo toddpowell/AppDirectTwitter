@@ -7,4 +7,8 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.post('/settings', function(req, res) {
+  //res.send("Settings updated");
+});
+
 module.exports = router;

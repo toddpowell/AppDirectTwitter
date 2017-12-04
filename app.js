@@ -9,7 +9,11 @@ var home = require('./routes/home');
 var tweets = require('./routes/tweets');
 var settings = require('./routes/settings');
 var about = require('./routes/about');
+var usermessage = require('./routes/usermessage');
 var embed = require('./routes/embed');
+
+var LocalStorage = require('node-localstorage').LocalStorage,
+localStorage = new LocalStorage('./scratch');
 
 var app = express();
 
@@ -29,7 +33,25 @@ app.use('/', home);
 app.use('/tweets', tweets);
 app.use('/settings', settings);
 app.use('/about', about);
+app.use('/usermessage', usermessage);
 app.use('/embed', embed);
+
+app.post('/settings', function(req,res){
+  console.log('maxTWeets : ' + req.body.max);
+  console.log('user1 : ' + req.body.user1);
+  console.log('user2 : ' + req.body.user2);
+  console.log('user3 : ' + req.body.user3);
+  // console.log('brief : ' + req.body.brief);
+  // console.log('extended : ' + req.body.extended);
+  if (req.body.max) { localStorage.setItem('maxTweets', req.body.max);  }
+  if (req.body.user1) { localStorage.setItem('userAccountNameA', req.body.user1); }
+  if (req.body.user2) { localStorage.setItem('userAccountNameB', req.body.user2); }
+  if (req.body.user3) { localStorage.setItem('userAccountNameC', req.body.user3); }
+
+  //res.send(200);
+  res.redirect(303, '/usermessage');
+  //res.render('usermessage', { message: "Settings updated" });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

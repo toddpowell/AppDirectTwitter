@@ -26,69 +26,35 @@
 <div id="page-title"><h1>Settings for {{title}}</h1></div>
 
 <div id="settings-container" class="container">
-  <div>
+<form class="formContactUs" role="form"
+  action="/settings" method="POST">
+  
     <div class="form-group">
-      <label for="max-tweets">Maximum Tweets:</label>
-      <input id="max-tweets" type="max-tweets" class="form-control" placeholder="" name="max-tweets">
-    </div>
-    <label>Tweet Mode:</label>
-    <div class="radio">
-        <label><input id="tweet-mode-brief" type="radio" name="optradio">Brief</label></div>
-    <div class="radio">
-        <label><input id="tweet-mode-extended" type="radio" name="optradio">Extended</label></div>
-    <div class="form-group">
-      <label for="user-account-1">User Account 1:</label>
-      <input id="user-account-1" type="user-account-1" class="form-control" placeholder="" name="max-tweets">
+        <label for="fieldMax" class="control-label">Maximum Tweets:</label>
+        <div class=""><input type="text" class="form-control" id="fieldMax" name="max"></div>
     </div>
     <div class="form-group">
-      <label for="user-account-2">User Account 2:</label>
-      <input id="user-account-2" type="user-account-2" class="form-control" placeholder="" name="max-tweets">
+        <label for="fieldUser1" class="control-label">User Account 1:</label>
+        <div class=""><input type="text" class="form-control" id="fieldUser1" name="user1"></div>
     </div>
     <div class="form-group">
-      <label for="user-account-3">User Account 3:</label>
-      <input id="user-account-3" type="user-account-3" class="form-control" placeholder="" name="max-tweets">
+        <label for="fieldUser2" class="control-label">User Account 2:</label>
+        <div class=""><input type="text" class="form-control" id="fieldUser1" name="user2"></div>
+    </div>    
+    <div class="form-group">
+        <label for="fieldUser3" class="control-label">User Account 3:</label>
+        <div class=""><input type="text" class="form-control" id="fieldUser3" name="user3"></div>
     </div>
-    <button id="updateSettingsBtn" class="btn btn-default">Submit</button>
+    <div class="form-group">
+
+  <div class="form-group">
+    <div class="">
+      <button id="updateSettingsBtn" type="submit" class="btn btn-default">Submit</button>
+    </div>
   </div>
-</div>
 
-<script>
-    
-    $(document).ready(function(){
-        $("#updateSettingsBtn").click(function(){
-            updateSetting();
-        });
+</form>
 
-        populateForm();
-    });
 
-    function populateForm() {
-        // Get values from localStorage
-        let maxTweets = localStorage.getItem('maxTweets') || "30";
-        let tweetMode = localStorage.getItem('tweetMode') || "extended";
-        let userAccountNameA = localStorage.getItem('userAccountNameA') || "appdirect";
-        let userAccountNameB = localStorage.getItem('userAccountNameB') || "laughingsquid";
-        let userAccountNameC = localStorage.getItem('userAccountNameC') || "techcrunch";
 
-        $("#max-tweets").val(maxTweets);
-        if(tweetMode == "extended") {
-            $('#tweet-mode-extended').prop('checked', true);
-        } else {
-            $('#tweet-mode-brief').prop('checked', true);
-        }
-        $("#tweet-mode").val(tweetMode);
-        
-        $("#user-account-1").val(userAccountNameA);
-        $("#user-account-2").val(userAccountNameB);
-        $("#user-account-3").val(userAccountNameC);
-    }
 
-    function updateSetting(){
-        localStorage.setItem("maxTweets", $("#max-tweets").val());
-        localStorage.setItem("tweetMode", $('form input[type=radio]:checked'));
-        localStorage.setItem("userAccountNameA", $("#user-account-1").val());
-        localStorage.setItem("userAccountNameB", $("#user-account-2").val());
-        localStorage.setItem("userAccountNameC", $("#user-account-3").val());
-    }
-
-</script>
